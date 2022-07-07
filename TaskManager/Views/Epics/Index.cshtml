@@ -16,7 +16,7 @@
                 @Html.DisplayNameFor(model => model.EpicsName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ProjectName)
+                @Html.DisplayNameFor(model => model.ProjectID)
             </th>
             <th></th>
         </tr>
@@ -28,7 +28,7 @@
                 @Html.DisplayFor(modelItem => item.EpicsName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ProjectName)
+                @Html.DisplayFor(modelItem => item.Projects.ProjectName)
             </td>
             
             <td>

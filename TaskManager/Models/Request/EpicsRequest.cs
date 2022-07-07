@@ -13,7 +13,7 @@ namespace TaskManager.Models.Request
         [Display(Name = "Epics")]
         public string EpicsName { get; set; }
 
-        public string ProjectName { get; set; }
+        public int ProjectID { get; set; }
                 
     }
 }

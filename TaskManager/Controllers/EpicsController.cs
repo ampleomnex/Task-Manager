@@ -26,9 +26,11 @@ namespace TaskManager.Controllers
         // GET: Customers
         public async Task<IActionResult> Index()
         {
-              return _context.Epics != null ? 
-                          View(await _context.Epics.ToListAsync()) :
-                          Problem("Entity set 'ApplicationDbContext.Epics'  is null.");
+            var applicationDbContext = _context.Epics.Include(e => e.Projects).Include(e => e.User);
+            return View(await applicationDbContext.ToListAsync());
+            //return _context.Epics != null ? 
+            //View(await _context.Epics.ToListAsync()) :
+            //Problem("Entity set 'ApplicationDbContext.Epics'  is null.");
         }
 
         // GET: Customers/Details/5
@@ -40,6 +42,8 @@ namespace TaskManager.Controllers
             }
 
             var epics = await _context.Epics
+                .Include(e => e.Projects)
+                .Include(e => e.User)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (epics == null)
             {
@@ -52,6 +56,7 @@ namespace TaskManager.Controllers
         // GET: Customers/Create
         public IActionResult Create()
         {
+            ViewData["ProjectID"] = new SelectList(_context.Projects, "Id", "ProjectName");
             return View();
         }
 
@@ -67,8 +72,9 @@ namespace TaskManager.Controllers
 
             if (ModelState.IsValid)
             {
-                epics.ProjectName = epicsrequest.ProjectName;
+                epics.ProjectID = epicsrequest.ProjectID;
                 epics.EpicsName = epicsrequest.EpicsName;
+                epics.User = user;
                                
                 _context.Add(epics);
                 await _context.SaveChangesAsync();
@@ -90,6 +96,8 @@ namespace TaskManager.Controllers
             {
                 return NotFound();
             }
+            ViewData["ProjectID"] = new SelectList(_context.Projects, "Id", "ProjectName", epics.ProjectID);
+
             return View(epics);
         }
 
@@ -108,7 +116,7 @@ namespace TaskManager.Controllers
                     if(epics != null)
                     {
                         epics.EpicsName = epicsrequest.EpicsName;
-                        epics.ProjectName = epicsrequest.ProjectName;
+                        epics.ProjectID = epicsrequest.ProjectID;
 
                     }
                     _context.Update(epics);
