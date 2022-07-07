@@ -21,5 +21,7 @@ namespace TaskManager.Data
         public DbSet<EmployeesDetails> Employees { get; set; }
 
         public DbSet<Project> Projects { get; set; }
+
+        public DbSet<Epics> Epics { get; set; }
     }
 }
