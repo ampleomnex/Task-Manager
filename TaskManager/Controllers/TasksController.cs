@@ -64,11 +64,18 @@ namespace TaskManager.Controllers
         // GET: Tasks
         public async Task<IActionResult> Index()
         {
-            var query = _context.Tasks.Join(_context.Employees, t => t.EmployeeID, emp => emp.EmployeeID, (t, emp) => new { t.TaskName, t.PriorityID,t.EstTime, emp.FirstName,emp.LastName,t.DueDate });
-            //return View(query.ToListAsync());
-            return _context.Tasks != null ? 
-                          View(await _context.Tasks.ToListAsync()) :
-                          Problem("Entity set 'ApplicationDbContext.Tasks'  is null.");
+            var model = _context.Tasks.Join(_context.Employees,
+                t => t.EmployeeID, 
+                emp => emp.EmployeeID,
+                (t, emp) => new Tasks{
+                    Id = t.Id,
+                    TaskName= t.TaskName, 
+                    PriorityID= t.PriorityID,
+                    EstTime= t.EstTime, 
+                    EmployeeID= emp.FirstName + " " + emp.LastName,
+                    DueDate= t.DueDate 
+                });
+            return View(model);
         }
 
         // GET: Tasks/Details/5
@@ -78,10 +85,6 @@ namespace TaskManager.Controllers
             {
                 return NotFound();
             }
-
-            /*var employee = await _context.Employees
-                .Include(f => f.EmployeeID)
-                .FirstOrDefaultAsync(m => m.employeeID == id);*/
 
             var tasks = await _context.Tasks
                 .FirstOrDefaultAsync(m => m.Id == id);
