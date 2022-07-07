@@ -10,22 +10,21 @@ namespace TaskManager.Models.Request
 {
     public class TasksRequest
     {
-        [Required(ErrorMessage = "Task Name is required.")]
-        [Display(Name = "Task")]
         public string TaskName { get; set; }
 
-        [Required(ErrorMessage = "Priority is required.")]
-        [Display(Name = "Priority")]
         public int PriorityID { get; set; }
         
-        [Display(Name = "Estimated Time")]
         public TimeSpan EstTime { get; set; }
 
-        [Required(ErrorMessage = "Employee is required.")]
-        [Display(Name = "Employee")]
-        public string EmployeeID { get; set; }
-                
-        [Display(Name = "Due Date")]
+        public virtual int ProjectID { get; set; }
+
+        public string AssignedTo { get; set; }
+
+        public string RequestedBy { get; set; }
+
         public DateTime DueDate { get; set; }
+
+        //public string Status { get; set; }
+        //public string Comments { get; set; }
     }
 }

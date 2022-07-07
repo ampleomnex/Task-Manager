@@ -1,0 +1,82 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using TaskManager.Data
+@model TaskManager.Models.EmployeeTask
+@inject SignInManager<AppUser> SignInManager
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>EmployeeTask</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="TaskName" class="control-label"></label>
+                <input asp-for="TaskName" class="form-control" />
+                <span asp-validation-for="TaskName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PriorityID" class="control-label"></label>
+                <select asp-for="PriorityID" class="form-control" asp-items="ViewBag.PriorityID"></select>
+                <span asp-validation-for="PriorityID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EstTime" class="control-label"></label>
+                <input asp-for="EstTime" class="form-control" />
+                <span asp-validation-for="EstTime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ProjectID" class="control-label"></label>
+                <select asp-for="ProjectID" class ="form-control" asp-items="ViewBag.ProjectID"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="AssignedTo" class="control-label"></label>
+                <select asp-for="AssignedTo" class="form-control" asp-items="ViewBag.AssignedTo"></select>
+                <span asp-validation-for="AssignedTo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="RequestedBy" class="control-label"></label>
+                <select asp-for="RequestedBy" class="form-control" asp-items="ViewBag.RequestedBy"></select>
+                <span asp-validation-for="RequestedBy" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DueDate" class="control-label"></label>
+                <input asp-for="DueDate" class="form-control" />
+                <span asp-validation-for="DueDate" class="text-danger"></span>
+            </div>
+            @if (SignInManager.IsSignedIn(User))
+            {
+                if (User.IsInRole("employee")) //Employees
+                {
+                    <div class="form-group">
+                        <label asp-for="Status" class="control-label"></label>
+                        <input asp-for="Status" class="form-control" />
+                        <span asp-validation-for="Status" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Comments" class="control-label"></label>
+                        <input asp-for="Comments" class="form-control" />
+                        <span asp-validation-for="Comments" class="text-danger"></span>
+                    </div>
+                }
+             }
+                
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
