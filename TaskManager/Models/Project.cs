@@ -11,7 +11,7 @@ namespace TaskManager.Models
         }
 
         [Key]
-        public int ProjectId { get; set; }
+        public int Id { get; set; }
 
         [Required(ErrorMessage = "Project Name is required..")]
         [Display(Name = "Project Name")]

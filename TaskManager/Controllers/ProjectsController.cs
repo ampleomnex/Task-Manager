@@ -37,7 +37,7 @@ namespace TaskManager.Controllers
             var project = await _context.Projects
                 .Include(p => p.Customers)
                 .Include(p => p.user)
-                .FirstOrDefaultAsync(m => m.ProjectId == id);
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (project == null)
             {
                 return NotFound();
@@ -98,7 +98,7 @@ namespace TaskManager.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("ProjectId,ProjectName,spoc,CustomerID,CreatedBy,CreatedDate")] Project project)
         {
-            if (id != project.ProjectId)
+            if (id != project.Id)
             {
                 return NotFound();
             }
@@ -112,7 +112,7 @@ namespace TaskManager.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ProjectExists(project.ProjectId))
+                    if (!ProjectExists(project.Id))
                     {
                         return NotFound();
                     }
@@ -139,7 +139,7 @@ namespace TaskManager.Controllers
             var project = await _context.Projects
                 .Include(p => p.Customers)
                 .Include(p => p.user)
-                .FirstOrDefaultAsync(m => m.ProjectId == id);
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (project == null)
             {
                 return NotFound();
@@ -169,7 +169,7 @@ namespace TaskManager.Controllers
 
         private bool ProjectExists(int id)
         {
-          return (_context.Projects?.Any(e => e.ProjectId == id)).GetValueOrDefault();
+          return (_context.Projects?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }
