@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-
+using TaskManager.Models.Request;
 namespace TaskManager.Models
 {
     public class Project
@@ -8,6 +8,14 @@ namespace TaskManager.Models
         public Project()
         {
             this.CreatedDate = DateTime.UtcNow;
+        }
+
+        public Project(ProjectRequest projectRequest)
+        {
+            this.CreatedDate = DateTime.UtcNow;
+            this.ProjectName = projectRequest.ProjectName;
+            this.spoc = projectRequest.spoc;
+            this.CustomerID = projectRequest.CustomerID;
         }
 
         [Key]

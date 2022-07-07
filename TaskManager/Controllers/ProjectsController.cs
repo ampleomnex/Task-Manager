@@ -2,17 +2,20 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using TaskManager.Data;
 using TaskManager.Models;
+using TaskManager.Models.Request;
 
 namespace TaskManager.Controllers
 {
     public class ProjectsController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<AppUser> _userManager;
 
         public ProjectsController(ApplicationDbContext context)
         {
@@ -59,10 +62,12 @@ namespace TaskManager.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ProjectId,ProjectName,spoc,CustomerID,CreatedBy,CreatedDate")] Project project)
+        public async Task<IActionResult> Create(ProjectRequest projectRequest)
         {
+            Project project = new Project(projectRequest);
             if (ModelState.IsValid)
             {
+                var user = await _userManager.GetUserAsync(HttpContext.User);
                 _context.Add(project);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -87,7 +92,7 @@ namespace TaskManager.Controllers
                 return NotFound();
             }
             ViewData["CustomerID"] = new SelectList(_context.Customers, "Id", "CustomerName", project.CustomerID);
-            ViewData["spoc"] = new SelectList(_context.Users, "Id", "Id", project.spoc);
+            ViewData["spoc"] = new SelectList(_context.Users, "Id", "UserName", project.spoc);
             return View(project);
         }
 
@@ -96,8 +101,9 @@ namespace TaskManager.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ProjectId,ProjectName,spoc,CustomerID,CreatedBy,CreatedDate")] Project project)
+        public async Task<IActionResult> Edit(int id, ProjectRequest projectRequest)
         {
+            var project = await _context.Projects.FindAsync(id);
             if (id != project.Id)
             {
                 return NotFound();
@@ -107,6 +113,11 @@ namespace TaskManager.Controllers
             {
                 try
                 {
+                    if (project != null) {
+                        project.ProjectName = projectRequest.ProjectName;
+                        project.spoc = projectRequest.spoc;
+                        project.CustomerID = projectRequest.CustomerID;
+                    }
                     _context.Update(project);
                     await _context.SaveChangesAsync();
                 }
