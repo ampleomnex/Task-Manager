@@ -69,8 +69,7 @@ namespace TaskManager.Controllers
             {
                 function.FunctionName = functionrequest.FunctionName;
                 function.DepartmentID = functionrequest.DepartmentID;
-                function.User = user;
-                function.CreatedDate = DateTime.Now;               
+                function.User = user;               
                 _context.Add(function);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));

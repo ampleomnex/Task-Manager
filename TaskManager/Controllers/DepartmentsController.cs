@@ -69,7 +69,6 @@ namespace TaskManager.Controllers
                 Department department = new Department();
                 department.DepartmentName = departmentRequest.DepartmentName;
                 department.User = user;
-                department.CreatedDate = DateTime.UtcNow;
 
                 _context.Add(department);
                 await _context.SaveChangesAsync();

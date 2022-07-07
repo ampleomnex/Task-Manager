@@ -30,7 +30,7 @@ namespace TaskManager.Areas.Identity.Pages.Account
         private readonly UserManager<AppUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IUserStore<AppUser> _userStore;
-       // private readonly IUserEmailStore<IdentityUser> _emailStore;
+        private readonly IUserEmailStore<IdentityUser> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
         private readonly IMapper _mapper;
@@ -41,16 +41,16 @@ namespace TaskManager.Areas.Identity.Pages.Account
             IUserStore<AppUser> userStore,
             SignInManager<AppUser> signInManager,
             ILogger<RegisterModel> logger,
-            IMapper mapper
-            //IEmailSender emailSender
+            IMapper mapper,
+            IEmailSender emailSender
             )
         {
             _userManager = userManager;
             _userStore = userStore;
-           // _emailStore = GetEmailStore();
+            //_emailStore = (IUserEmailStore<IdentityUser>)GetEmailStore();
             _signInManager = signInManager;
             _logger = logger;
-            //_emailSender = emailSender;
+            _emailSender = emailSender;
             _roleManager = roleManager;
             _mapper = mapper;
         }
@@ -136,13 +136,14 @@ namespace TaskManager.Areas.Identity.Pages.Account
                 }
 
                 //var user = CreateUser();
-                User user = new User(null,null , Input.Email, Input.Email, Guid.NewGuid());
-
-
-                //await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
-                //await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
+                User user = new User(Input.Email, Input.Email, Input.Email, Input.Email, Guid.NewGuid());
 
                 var AspNetUsers = _mapper.Map<AppUser>(user);
+
+                await _userStore.SetUserNameAsync(AspNetUsers, Input.Email, CancellationToken.None);
+                //await _emailStore.SetEmailAsync(AspNetUsers, Input.Email, CancellationToken.None);
+
+                
                 var result = await _userManager.CreateAsync(AspNetUsers, Input.Password);
                 if (!await _userManager.IsInRoleAsync(AspNetUsers, "admin"))
                 {
@@ -157,19 +158,15 @@ namespace TaskManager.Areas.Identity.Pages.Account
                     var userId = await _userManager.GetUserIdAsync(AspNetUsers);
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(AspNetUsers);
                     code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
-                    
-                    code = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(code));
-                    var emailConfirmresult = await _userManager.ConfirmEmailAsync(AspNetUsers, code);
+                                        
 
-                    return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl = returnUrl });
-
-                    /*var callbackUrl = Url.Page(
+                    var callbackUrl = Url.Page(
                         "/Account/ConfirmEmail",
                         pageHandler: null,
                         values: new { area = "Identity", userId = userId, code = code, returnUrl = returnUrl },
                         protocol: Request.Scheme);
 
-                    await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
+                   /* await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
                         $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");*/
 
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
