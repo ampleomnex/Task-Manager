@@ -1,4 +1,4 @@
-﻿@model IEnumerable<TaskManager.Models.EmployeeTask>
+﻿@model IEnumerable<TaskManager.Models.Tasks>
 
 @{
     ViewData["Title"] = "Index";
@@ -25,10 +25,13 @@
                 @Html.DisplayNameFor(model => model.Projects)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.AssignedTo)
+                @Html.DisplayNameFor(model => model.Epics)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.RequestedBy)
+                @Html.DisplayNameFor(model => model.AssignedUser)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RequestedUser)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.DueDate)
@@ -43,7 +46,7 @@
                 @Html.DisplayFor(modelItem => item.TaskName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.PriorityID)
+                @Html.DisplayFor(modelItem => item.OptionType.OptionName)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.EstTime)
@@ -52,10 +55,13 @@
                 @Html.DisplayFor(modelItem => item.Projects.ProjectName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.AssignedTo)
+                @Html.DisplayFor(modelItem => item.Epics.EpicsName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.RequestedBy)
+                @Html.DisplayFor(modelItem => item.AssignedUser.FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RequestedUser.FirstName)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.DueDate)

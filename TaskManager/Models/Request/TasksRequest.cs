@@ -18,6 +18,8 @@ namespace TaskManager.Models.Request
 
         public virtual int ProjectID { get; set; }
 
+        public virtual int EpicsID { get; set; }
+
         public string AssignedTo { get; set; }
 
         public string RequestedBy { get; set; }

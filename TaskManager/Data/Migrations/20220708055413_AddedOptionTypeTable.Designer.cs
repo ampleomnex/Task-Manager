@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TaskManager.Data;
 
@@ -11,9 +12,10 @@ using TaskManager.Data;
 namespace TaskManager.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220708055413_AddedOptionTypeTable")]
+    partial class AddedOptionTypeTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -517,8 +519,6 @@ namespace TaskManager.Data.Migrations
 
                     b.HasIndex("EpicsID");
 
-                    b.HasIndex("PriorityID");
-
                     b.HasIndex("ProjectID");
 
                     b.HasIndex("RequestedBy");
@@ -717,12 +717,6 @@ namespace TaskManager.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("TaskManager.Models.OptionType", "OptionType")
-                        .WithMany()
-                        .HasForeignKey("PriorityID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("TaskManager.Models.Project", "Projects")
                         .WithMany()
                         .HasForeignKey("ProjectID")
@@ -738,8 +732,6 @@ namespace TaskManager.Data.Migrations
                     b.Navigation("AssignedUser");
 
                     b.Navigation("Epics");
-
-                    b.Navigation("OptionType");
 
                     b.Navigation("Projects");
 

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TaskManager.Data;
 
@@ -11,9 +12,10 @@ using TaskManager.Data;
 namespace TaskManager.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220708042049_AddedTaskTable")]
+    partial class AddedTaskTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -342,6 +344,60 @@ namespace TaskManager.Data.Migrations
                     b.ToTable("Employees");
                 });
 
+            modelBuilder.Entity("TaskManager.Models.EmployeeTask", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("AssignedTo")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Comments")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DueDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<TimeSpan>("EstTime")
+                        .HasColumnType("time");
+
+                    b.Property<int>("PriorityID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProjectID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("RequestedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Status")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TaskName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatedBy");
+
+                    b.HasIndex("ProjectID");
+
+                    b.ToTable("EmployeeTasks");
+                });
+
             modelBuilder.Entity("TaskManager.Models.Epics", b =>
                 {
                     b.Property<int>("Id")
@@ -401,30 +457,6 @@ namespace TaskManager.Data.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Functions");
-                });
-
-            modelBuilder.Entity("TaskManager.Models.OptionType", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("OptionName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Type")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Value")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("OptionTypes");
                 });
 
             modelBuilder.Entity("TaskManager.Models.Project", b =>
@@ -516,8 +548,6 @@ namespace TaskManager.Data.Migrations
                     b.HasIndex("CreatedBy");
 
                     b.HasIndex("EpicsID");
-
-                    b.HasIndex("PriorityID");
 
                     b.HasIndex("ProjectID");
 
@@ -642,6 +672,25 @@ namespace TaskManager.Data.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("TaskManager.Models.EmployeeTask", b =>
+                {
+                    b.HasOne("TaskManager.Models.AppUser", "User")
+                        .WithMany()
+                        .HasForeignKey("CreatedBy")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("TaskManager.Models.Project", "Projects")
+                        .WithMany()
+                        .HasForeignKey("ProjectID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Projects");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("TaskManager.Models.Epics", b =>
                 {
                     b.HasOne("TaskManager.Models.AppUser", "User")
@@ -717,12 +766,6 @@ namespace TaskManager.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("TaskManager.Models.OptionType", "OptionType")
-                        .WithMany()
-                        .HasForeignKey("PriorityID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("TaskManager.Models.Project", "Projects")
                         .WithMany()
                         .HasForeignKey("ProjectID")
@@ -738,8 +781,6 @@ namespace TaskManager.Data.Migrations
                     b.Navigation("AssignedUser");
 
                     b.Navigation("Epics");
-
-                    b.Navigation("OptionType");
 
                     b.Navigation("Projects");
 
