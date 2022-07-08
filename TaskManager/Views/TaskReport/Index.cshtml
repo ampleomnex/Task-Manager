@@ -1,0 +1,93 @@
+﻿@model IEnumerable<TaskManager.Models.Response.EmployeeTaskReport>
+
+@{
+    ViewData["Title"] = "Report";
+}
+
+<h1>All Task Report</h1>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ProjectName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EpicName)
+            </th>
+            
+            <th>
+                @Html.DisplayNameFor(model => model.Priority)
+            </th>
+            
+            <th>
+                @Html.DisplayNameFor(model => model.AssignedTo)
+            </th>
+            
+            <th>
+                @Html.DisplayNameFor(model => model.RequestedBy)
+            </th>
+            
+            <th>
+                @Html.DisplayNameFor(model => model.TaskName)
+            </th>
+            
+            <th>
+                @Html.DisplayNameFor(model => model.Status)
+            </th>
+            
+            <!--<th>
+                @*@Html.DisplayNameFor(model => model.PlannedStart)*@
+            </th>-->
+            <th>
+                @Html.DisplayNameFor(model => model.RequestDate)
+            </th>
+            <!--<th>
+                @*@Html.DisplayNameFor(model => model.ModifiedDate)*@
+            </th>-->
+            <th>
+                @Html.DisplayNameFor(model => model.DueDate)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProjectName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EpicName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Priority)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AssignedTo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RequestedBy)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TaskName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+            <!--<td>
+                @*@Html.DisplayFor(modelItem => item.PlannedStart)*@
+            </td>-->
+            <td>
+                @Html.DisplayFor(modelItem => item.RequestDate)
+            </td>
+            <!--<td>
+               @* @Html.DisplayFor(modelItem => item.ModifiedDate)*@
+            </td> -->           
+            <td>
+                @Html.DisplayFor(modelItem => item.DueDate)
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
