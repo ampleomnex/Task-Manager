@@ -49,6 +49,12 @@ namespace TaskManager.Models
         [ForeignKey("RequestedBy")]
         public virtual AppUser RequestedUser { get; set; }
 
+        [Display(Name = "Request Date")]
+        public DateTime RequestDate { get; set; }
+
+        [Display(Name = "Planned Start")]
+        public DateTime PlannedStart { get; set; }
+
         [Display(Name = "Due Date")]
         public DateTime DueDate { get; set; }
 
@@ -60,6 +66,8 @@ namespace TaskManager.Models
         [ForeignKey("CreatedBy")]
         public virtual AppUser User { get; set; }
         public DateTime CreatedDate { get; set; }
+
+        public DateTime ModifiedDate { get; set; }
 
     }
 }

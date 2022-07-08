@@ -97,6 +97,9 @@ namespace TaskManager.Controllers
                 tasks.EstTime = taskrequest.EstTime;
                 tasks.AssignedTo = taskrequest.AssignedTo;
                 tasks.RequestedBy = taskrequest.RequestedBy;
+                tasks.RequestDate = taskrequest.RequestDate;
+                tasks.PlannedStart = taskrequest.PlannedStart;
+                tasks.Status = "ToDo";
                 tasks.User = user;
                 _context.Add(tasks);
                 await _context.SaveChangesAsync();
@@ -159,6 +162,10 @@ namespace TaskManager.Controllers
                         tasks.EstTime = taskrequest.EstTime;
                         tasks.AssignedTo = taskrequest.AssignedTo;
                         tasks.RequestedBy = taskrequest.RequestedBy;
+                        tasks.RequestDate = taskrequest.RequestDate;
+                        tasks.PlannedStart = taskrequest.PlannedStart;
+                        tasks.Status = "ToDo";
+                        tasks.ModifiedDate = DateTime.UtcNow;
                     }
                     _context.Update(tasks);
                     await _context.SaveChangesAsync();

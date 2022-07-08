@@ -23,6 +23,9 @@ namespace TaskManager.Models.Request
         public string AssignedTo { get; set; }
 
         public string RequestedBy { get; set; }
+        public DateTime RequestDate { get; set; }
+
+        public DateTime PlannedStart { get; set; }
 
         public DateTime DueDate { get; set; }
 
