@@ -6,6 +6,7 @@
         public string EpicName { get; set; }    
         public string Priority { get; set; }
 
+        public int PriorityID { get; set; }
         public string AssignedTo { get; set; }    
 
         public string RequestedBy { get; set; }

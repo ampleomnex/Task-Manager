@@ -1,35 +1,31 @@
 ﻿@model IEnumerable<TaskManager.Models.Response.EmployeeTaskReport>
 
 @{
-    ViewData["Title"] = "Report";
+    ViewData["Title"] = "Employee Report";
 }
 
-<h1>Report</h1>
+<h1>Index</h1>
+
+<!--<form asp-controller="TaskReport" asp-action="SearchByEmployee">
+    <tr>
+        <td> Assigned to : </td>
+        <td> @*@Html.DropDownList("AssignedTo", (IEnumerable<SelectListItem>)ViewBag.MySkills,new { @onchange="javascript:sendEmployeeID();" })*@ </td>
+    </tr>
+</form>-->
+
+@Html.DropDownList("AssignedTo", (IEnumerable<SelectListItem>)ViewBag.MySkills,
+     new { @onchange="callChangefunc(this.value)" 
+});
+
+<script>
+    function callChangefunc(val){
+        window.location.href = "/TaskReport/SearchByEmployee?value=" + val;
+    }
+</script>
 
 
-<div style="float: left;">
-    <table>
-        <tr>
-            <td>Employee :</td>
-            <td>
-                @Html.DropDownList("AssignedTo", (IEnumerable<SelectListItem>)ViewBag.AssignedTo, new { @class = "form-control", @id = "ddlEmployee" })
-            </td>
-            <td>Priority</td>
-            <td>
-               @* @Html.DropDownList("Priority", (IEnumerable<SelectListItem>)ViewBag.Priority, new { @class = "form-control", @id = "ddlPriority" })*@
-            </td>
-            <td>
-                <button id="btnSearch" type="button" class="btn btn-danger">
-                Search
-            </button>
-            </td>
-        </tr>
 
-    </table>
-    
-</div>
-<div style="height:400px;overflow:auto;float: right;">
-    <table class="table">
+<table class="table">
     <thead>
         <tr>
             <th>
@@ -74,7 +70,7 @@
         </tr>
     </thead>
     <tbody>
-    @foreach (var item in Model) {
+@foreach (var item in Model) {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.ProjectName)
@@ -110,45 +106,6 @@
                 @Html.DisplayFor(modelItem => item.DueDate)
             </td>
         </tr>
-    }
+}
     </tbody>
-</table>    
-</div>
-
-
-
-
-
-
-
-
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-
-
-         <script type="text/javascript">
-            $(function () {
-                $('#btnSearch').click(function () {
-                    var userid = $("#ddlEmployee").val();
-                    var params = JSON.stringify({
-                        "employeeId": userid
-                    });
-                    if (userid != "") {
-                        $.ajax({
-                            url: "/TaskReport/EmployeeReport?employeeId="+userid + "&Param1="+userid,
-                            contentType: 'application/json',
-                            type: 'GET',
-                            success: function (response) {
-                            },
-                            error: function () {
-                               // alert("Error :" + userid);
-                            }
-                        });
-                                               
-                    }
-                });
-            });
-        </script>
-
-
-            }
+</table>

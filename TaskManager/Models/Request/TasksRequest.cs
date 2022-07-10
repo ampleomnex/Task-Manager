@@ -14,7 +14,7 @@ namespace TaskManager.Models.Request
 
         public int PriorityID { get; set; }
         
-        public TimeSpan EstTime { get; set; }
+        public DateTime EstTime { get; set; }
 
         public virtual int ProjectID { get; set; }
 

@@ -24,7 +24,7 @@ namespace TaskManager.Models
         public virtual OptionType OptionType { get; set; }
 
         [Display(Name = "Estimated Time")]
-        public TimeSpan EstTime { get; set; }
+        public DateTime EstTime { get; set; }
 
         [Required(ErrorMessage = "Project Name is required.")]
         [Display(Name = "Project Name")]
