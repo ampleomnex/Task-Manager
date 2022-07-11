@@ -7,38 +7,52 @@
 <h1>Report</h1>
 
 
-<div style="float: left;">
+<div>
     <table>
         <tr>
             <td>Employee :</td>
             <td>
                 @Html.DropDownList("AssignedTo", (IEnumerable<SelectListItem>)ViewBag.AssignedTo, new { @class = "form-control", @id = "ddlEmployee" })
             </td>
+            <td width="10"></td>
             <td>Priority</td>
             <td>
                 @Html.DropDownList("Priority", (IEnumerable<SelectListItem>)ViewBag.Priority, new { @class = "form-control", @id = "ddlPriority" })
 
             </td>
+            <td width="10"></td>
             <td>Start Date :</td>
             <td>
                   <input type="date" id="startDate" name="startDate" />
             </td>
+            <td width="10"></td>
             <td>End Date</td>
             <td>
                 <input type="date" id="endDate" name="endDate" />
             </td>
+            <td width="10"></td>
             <td>
-                <button id="btnSearch" type="button" class="btn btn-danger">
-                Search
-            </button>
+                <button id="btnSearch" type="button" class="btn btn-success">
+                    Search
+                </button>
+            </td>
+            <td width="10"></td>
+            <td>
+                <form asp-controller="TaskReport" asp-action="Index">
+                    <input type="submit" class="btn btn-danger" value="Reset" />
+                </form>
             </td>
         </tr>
 
     </table>
     
 </div>
-<div style="height:380px;overflow:auto;float: right;">
-    <table class="table">
+
+<div style="height:380px;overflow:auto;">
+    <div  class="text-center; display: none">
+        <span id="noRecord" style="display: none">No records</span>
+    </div>
+    <table class="table" id="reporttable">
     <thead>
         <tr>
             <th>
@@ -124,18 +138,35 @@
 </table>    
 </div>
 
-
-
-
-
-
-
-
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 
 
          <script type="text/javascript">
+             $(document).ready( function() {
+                var now = new Date();
+                var lweek = new Date(now.getFullYear(), now.getMonth(), now.getDate() - 7);
+  
+                console.log(lweek);
+                var smonth = (now.getMonth() + 1);               
+                var sday = now.getDate();
+                if (smonth < 10) 
+                    smonth = "0" + smonth;
+                if (sday < 10) 
+                    sday = "0" + sday;
+                var emonth = (lweek.getMonth() + 1);               
+                var eday = lweek.getDate();
+                if (emonth < 10) 
+                    emonth = "0" + emonth;
+                if (eday < 10) 
+                    eday = "0" + eday;
+                var today = now.getFullYear() + '-' + smonth + '-' + sday;
+                var lastWeek = lweek.getFullYear() + '-' + emonth + '-' + eday;
+                console.log(lastWeek);
+                 $('#endDate').val(today);
+                 $('#startDate').val(lastWeek);
+            });
+
             $(function () {
                 $('#btnSearch').click(function () {
                     var userid = $("#ddlEmployee").val();
@@ -152,17 +183,60 @@
                             type: 'GET',
                             success: function (response) {
                                 console.log(response);
-                                $("#tableReport").empty();                               
-
+                                var rowIdx = 0;
+                                if (response.length == 0) {
+                                    $('#reporttable').hide();
+                                    $('#noRecord').show();
+                                }
+                                else {
+                                    $('#noRecord').hide();
+                                    $('#reporttable').show();
+                                    $("#tableReport").empty();                                
+                                    for (var i = 0; i < response.length; i++) {
+                                        $('#tableReport').append(
+                                            '<tr>' +
+                                                '<td class="text-center">' +
+                                                    '<span>'+ response[i]['projectName'] + '</span>' +
+                                                '</td>' +
+                                                '<td class="text-center">' +
+                                                    '<span>'+ response[i]['epicName'] + '</span>' +
+                                                '</td>' +
+                                                '<td class="text-center">' +
+                                                    '<span>'+ response[i]['priority'] + '</span>' +
+                                                '</td>'+ 
+                                                '<td class="text-center">' +
+                                                    '<span>'+ response[i]['assignedTo'] + '</span>' +
+                                                '</td>'+ 
+                                                '<td class="text-center">' +
+                                                    '<span>'+ response[i]['requestedBy'] + '</span>' +
+                                                '</td>'+ 
+                                                '<td class="text-center">' +
+                                                    '<span>'+ response[i]['taskName'] + '</span>' +
+                                                '</td>'+ 
+                                                '<td class="text-center">' +
+                                                    '<span>'+ response[i]['status'] + '</span>' +
+                                                '</td>'+ 
+                                                '<td class="text-center">' +
+                                                    '<span>'+ response[i]['requestDate'] + '</span>' +
+                                                '</td>'+ 
+                                                '<td class="text-center">' +
+                                                    '<span>'+ response[i]['dueDate'] + '</span>' +
+                                                '</td>'+ 
+                                            '</tr>'                                        
+                                         );                                      
+                                    }
+                              }
                             },
                             error: function () {
                                // alert("Error :" + userid);
                             }
-                        });
-                                               
+                        });                                               
                     }
                 });
+                               
             });
+
+            
         </script>
 
 
