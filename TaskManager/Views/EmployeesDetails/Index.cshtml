@@ -1,14 +1,13 @@
-﻿@model IEnumerable<TaskManager.Models.EmployeesDetails>
+﻿@model IEnumerable<TaskManager.Models.EmployeeDetails>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Employees";
 }
+<h3>@ViewData["Title"]</h3>
 
-<h1>Index</h1>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+<div class="text-right" style="margin-bottom:10px">   
+     <a type="button" class="btn btn-secondary" asp-action="Create">Add Employees</a>
+</div>
 <table class="table">
     <thead>
         <tr>
@@ -22,11 +21,21 @@
                 @Html.DisplayNameFor(model => model.Email)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Departments)
+                @Html.DisplayNameFor(model => model.DepartmentID)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Reportingto)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RoleName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FunctionID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TeamID)
+            </th>
+            
             <th></th>
         </tr>
     </thead>
@@ -45,9 +54,19 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Departments.DepartmentName)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Reportingto)
+             <td>
+                @Html.DisplayFor(modelItem => item.ReportingUser.FirstName)
             </td>
+             <td>
+                @Html.DisplayFor(modelItem => item.Roles.Name)
+            </td>
+             <td>
+                @Html.DisplayFor(modelItem => item.Functions.FunctionName)
+            </td>
+             <td>
+                @Html.DisplayFor(modelItem => item.Teams.TeamName)
+            </td>
+          
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.Id">Details</a> |

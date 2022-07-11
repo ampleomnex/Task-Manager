@@ -1,14 +1,11 @@
-﻿@model TaskManager.Models.EmployeesDetails
+﻿@model TaskManager.Models.EmployeeDetails
 
 @{
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
-
-<h4>EmployeesDetails</h4>
-<hr />
-<div class="row">
+<h3>Create Employee</h3>
+<div class="container">
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -16,36 +13,54 @@
                 <label asp-for="FirstName" class="control-label"></label>
                 <input asp-for="FirstName" class="form-control" />
                 <span asp-validation-for="FirstName" class="text-danger"></span>
-            </div>
+            </div><br />
             <div class="form-group">
                 <label asp-for="LastName" class="control-label"></label>
                 <input asp-for="LastName" class="form-control" />
                 <span asp-validation-for="LastName" class="text-danger"></span>
-            </div>
+            </div><br />
             <div class="form-group">
                 <label asp-for="Email" class="control-label"></label>
                 <input asp-for="Email" class="form-control" />
                 <span asp-validation-for="Email" class="text-danger"></span>
-            </div>
+            </div><br />
+            <div class="form-group">
+                <label asp-for="PhoneNumber" class="control-label"></label>
+                <input asp-for="PhoneNumber" class="form-control" />
+            </div><br />
             <div class="form-group">
                 <label asp-for="DepartmentID" class="control-label"></label>
                 <select asp-for="DepartmentID" class ="form-control" asp-items="ViewBag.DepartmentID"></select>
-            </div>
+            </div><br />
             <div class="form-group">
                 <label asp-for="Reportingto" class="control-label"></label>
-                <input asp-for="Reportingto" class="form-control" />
+               <select asp-for="Reportingto" class ="form-control" asp-items="ViewBag.Reportingto"></select>
                 <span asp-validation-for="Reportingto" class="text-danger"></span>
-            </div>
+            </div><br />
+             <div class="form-group">
+                <label asp-for="RoleName" class="control-label"></label>
+               <select asp-for="RoleName" class ="form-control" asp-items="ViewBag.RoleName"></select>
+                <span asp-validation-for="RoleName" class="text-danger"></span>
+            </div><br />
+
+            <div class="form-group">
+                <label asp-for="FunctionID" class="control-label"></label>
+                <select asp-for="FunctionID" class ="form-control" asp-items="ViewBag.FunctionID"></select>
+            </div><br />
+
+            <div class="form-group">
+                <label asp-for="TeamID" class="control-label"></label>
+                <select asp-for="TeamID" class ="form-control" asp-items="ViewBag.TeamID"></select>
+            </div><br />
+
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
+                 <a type="button" class="btn btn-secondary" asp-action="Index">Cancel</a>
             </div>
         </form>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
