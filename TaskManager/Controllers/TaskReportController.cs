@@ -36,17 +36,24 @@ namespace TaskManager.Controllers
 
         public async Task getPriority()
         {
-            ViewData["Priority"] = new SelectList(_context.OptionTypes, "Id", "OptionName");
+            var list = _context.OptionTypes.ToList();
+            ViewData["Priority"] = new SelectList(list, "Id", "OptionName");
 
+        }
+
+        [HttpGet]
+        public List<EmployeeTaskReport> GetEmployeeReport  (string employeeId, int priority, string startDate, string endDate)
+        {
+            var list =  getTaskReportByEmployee(employeeId, priority, startDate, endDate).ToList();
+            return list;
         }
 
 
 
         [HttpGet]
-        public async Task<IActionResult> EmployeeReport(string employeeId,string Param1)
+        public async Task<IActionResult> EmployeeReport(string employeeId, int priority, string startDate, string endDate)
         {
-            View();
-            return View(getTaskReportByEmployee(employeeId).ToList());
+            return View(this.GetEmployeeReport(employeeId, priority,startDate, endDate).ToList());
         }
 
         [HttpGet]
@@ -100,7 +107,7 @@ namespace TaskManager.Controllers
         }
 
         [HttpGet]
-        public List<EmployeeTaskReport> getTaskReportByEmployee(String empID)
+        public List<EmployeeTaskReport> getTaskReportByEmployee(String empID,int priority, string startDate, string endDate)
         {
             List<EmployeeTaskReport> employees = new List<EmployeeTaskReport>();
             try
@@ -108,20 +115,27 @@ namespace TaskManager.Controllers
 
                 using (var database = _context)
                 {
-                    var connection = _context.Database.GetDbConnection();
+                    var connection = database.Database.GetDbConnection();
                     connection.Open();
 
                     var command = connection.CreateCommand();
                     command.CommandType = CommandType.StoredProcedure;
                     command.CommandText = "[dbo].[IndividualEmployeeTaskReport]";
-                    //[TaskFilter]
-                   // command.CommandText = "[dbo].[TaskFilter]";
-                    //command.Parameters.Add(new SqlParameter("@StartDate", "10-7-2022"));
-                    //command.Parameters.Add(new SqlParameter("@EndDate", "17-07-2022"));
-                    //command.Parameters.Add(new SqlParameter("@Priority", "high"));
-                    command.Parameters.Add(new SqlParameter("@AssignedTo", empID));
-                    var reader = command.ExecuteReader();
+                    DateTime dateTime = Convert.ToDateTime(startDate);
+                    DateTime end = Convert.ToDateTime(endDate);
 
+                    //----------------Parameters
+                    var empId = (object)empID ?? DBNull.Value;
+                    var prorityParm = (object)priority ?? DBNull.Value;
+                    var statusParam = DBNull.Value;
+                    var sessionStartDate = (object)dateTime ?? DBNull.Value;
+                    var sessionEndDate = (object)end ?? DBNull.Value;
+                    command.Parameters.Add(new SqlParameter("@StartDate", sessionStartDate));
+                    command.Parameters.Add(new SqlParameter("@EndDate", sessionEndDate));
+                    command.Parameters.Add(new SqlParameter("@PriorityID", prorityParm));
+                    command.Parameters.Add(new SqlParameter("@Status", statusParam));
+                    command.Parameters.Add(new SqlParameter("@AssignedTo", empId));
+                    var reader = command.ExecuteReader();
 
                     while (reader.Read())
                     {
