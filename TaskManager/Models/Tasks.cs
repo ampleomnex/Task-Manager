@@ -58,7 +58,7 @@ namespace TaskManager.Models
         [Display(Name = "Due Date")]
         public DateTime DueDate { get; set; }
 
-        public string? Status { get; set; }
+        public string Status { get; set; }
         public string? Comments { get; set; }
 
         [Display(Name = "CreatedBy")]
