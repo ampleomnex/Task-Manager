@@ -63,6 +63,11 @@ namespace TaskManager.Controllers
 
             var employeesDetails = await _context.EmployeeDetails
                 .Include(e => e.Departments)
+                .Include(e => e.ReportingUser)
+               .Include(e => e.Roles)
+               .Include(e => e.Functions)
+               .Include(e => e.Teams)
+               .Include(e => e.User)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (employeesDetails == null)
             {
@@ -273,6 +278,11 @@ namespace TaskManager.Controllers
 
             var employeesDetails = await _context.EmployeeDetails
                 .Include(e => e.Departments)
+                .Include(e => e.ReportingUser)
+               .Include(e => e.Roles)
+               .Include(e => e.Functions)
+               .Include(e => e.Teams)
+               .Include(e => e.User)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (employeesDetails == null)
             {

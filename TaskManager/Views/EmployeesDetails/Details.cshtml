@@ -29,6 +29,12 @@
             @Html.DisplayFor(model => model.Email)
         </dd>
         <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.PhoneNumber)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.PhoneNumber)
+        </dd>
+        <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Departments)
         </dt>
         <dd class = "col-sm-10">
@@ -38,11 +44,30 @@
             @Html.DisplayNameFor(model => model.Reportingto)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Reportingto)
+            @Html.DisplayFor(model => model.ReportingUser.FirstName)
+        </dd>
+         <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.FunctionID)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Functions.FunctionName)
+        </dd>
+            <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.TeamID)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Teams.TeamName)
+        </dd>
+         </dd>
+            <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CreatedBy)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.User.UserName)
         </dd>
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a type="button" class="btn btn-primary" asp-action="Edit">Edit</a>
+    <a type="button" class="btn btn-secondary" asp-action="Index">Cancel</a>
 </div>
