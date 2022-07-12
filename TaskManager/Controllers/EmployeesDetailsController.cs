@@ -120,9 +120,10 @@ namespace TaskManager.Controllers
                 var password = "Test@123";
                 var AspNetUsers = _mapper.Map<AppUser>(user);
                 var result = await _userManager.CreateAsync(AspNetUsers, password);
-                if (!await _userManager.IsInRoleAsync(AspNetUsers, "employee"))
+                var urole = await _roleManager.FindByIdAsync(employeesrequest.RoleName);
+                if (!await _userManager.IsInRoleAsync(AspNetUsers, urole.Name))
                 {
-                    var userResult = await _userManager.AddToRoleAsync(AspNetUsers, "employee");
+                    var userResult = await _userManager.AddToRoleAsync(AspNetUsers, urole.Name);
                 }
                 if(result.Succeeded)
                 {
@@ -208,13 +209,25 @@ namespace TaskManager.Controllers
         public async Task<IActionResult> Edit(int id, EmployeesDetailsRequest employeesrequest)
         {
             var employeesDetails = await _context.EmployeeDetails.FindAsync(id);
-            
             if (ModelState.IsValid)
             {
                 try
                 {
                     if (employeesDetails != null)
-                    {                        
+                    {
+
+                        var AspNetUsers = await _userManager.FindByIdAsync(employeesDetails.EmployeeID);
+                        AspNetUsers.FirstName = employeesrequest.FirstName;
+                        AspNetUsers.LastName = employeesrequest.LastName;
+                        AspNetUsers.Email = employeesrequest.Email;
+                        AspNetUsers.UserName = employeesrequest.Email;
+                        var result = await _userManager.UpdateAsync(AspNetUsers);
+                        var urole = await _roleManager.FindByIdAsync(employeesrequest.RoleName);
+                        if (!await _userManager.IsInRoleAsync(AspNetUsers, urole.Name))
+                        {
+                            var userResult = await _userManager.AddToRoleAsync(AspNetUsers, urole.Name);
+                        }
+
                         employeesDetails.Reportingto = employeesrequest.Reportingto;
                         employeesDetails.Email = employeesrequest.Email;
                         employeesDetails.FirstName = employeesrequest.FirstName;

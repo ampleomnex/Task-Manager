@@ -8,7 +8,7 @@
 
 <h4>Tasks</h4>
 <hr />
-<div class="row">
+<div class="container">
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -16,48 +16,48 @@
                 <label asp-for="TaskName" class="control-label"></label>
                 <input asp-for="TaskName" class="form-control" />
                 <span asp-validation-for="TaskName" class="text-danger"></span>
-            </div>
+            </div><br />
             <div class="form-group">
                 <label asp-for="PriorityID" class="control-label"></label>
                 <select asp-for="PriorityID" class="form-control" asp-items="ViewBag.PriorityID"></select>
                 <span asp-validation-for="PriorityID" class="text-danger"></span>
-            </div>
+            </div><br />
             <div class="form-group">
                 <label asp-for="EstTime" class="control-label"></label>
                 <input asp-for="EstTime" class="form-control" />
                 <span asp-validation-for="EstTime" class="text-danger"></span>
-            </div>
+            </div><br />
             <div class="form-group">
                 <label asp-for="ProjectID" class="control-label"></label>
                 <select asp-for="ProjectID" class ="form-control" asp-items="ViewBag.ProjectID"></select>
-            </div>
+            </div><br />
             <div class="form-group">
                 <label asp-for="EpicsID" class="control-label"></label>
                 <select asp-for="EpicsID" class ="form-control" asp-items="ViewBag.EpicsID"></select>
-            </div>
+            </div><br />
             <div class="form-group">
                 <label asp-for="AssignedTo" class="control-label"></label>
                 <select asp-for="AssignedTo" class ="form-control" asp-items="ViewBag.AssignedTo"></select>
-            </div>
+            </div><br />
             <div class="form-group">
                 <label asp-for="RequestedBy" class="control-label"></label>
                 <select asp-for="RequestedBy" class ="form-control" asp-items="ViewBag.RequestedBy"></select>
-            </div>
+            </div><br />
             <div class="form-group">
                 <label asp-for="RequestDate" class="control-label"></label>
                 <input asp-for="RequestDate" class="form-control" />
                 <span asp-validation-for="RequestDate" class="text-danger"></span>
-            </div>
+            </div><br />
             <div class="form-group">
                 <label asp-for="PlannedStart" class="control-label"></label>
                 <input asp-for="PlannedStart" class="form-control" />
                 <span asp-validation-for="PlannedStart" class="text-danger"></span>
-            </div>
+            </div><br />
             <div class="form-group">
                 <label asp-for="DueDate" class="control-label"></label>
                 <input asp-for="DueDate" class="form-control" />
                 <span asp-validation-for="DueDate" class="text-danger"></span>
-            </div>
+            </div><br />
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
