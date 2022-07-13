@@ -48,12 +48,24 @@ namespace TaskManager.Controllers
             return list;
         }
 
+        [HttpGet]
+        public List<EmployeeTaskReport> GetTaskCompletedOnTime(string employeeId, int priority, string startDate, string endDate)
+        {
+            var list = getTaskCompletedOnTimeByEmployee(employeeId, priority, startDate, endDate).ToList();
+            return list;
+        }
 
 
         [HttpGet]
         public async Task<IActionResult> EmployeeReport(string employeeId, int priority, string startDate, string endDate)
         {
             return View(this.GetEmployeeReport(employeeId, priority,startDate, endDate).ToList());
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> EmployeeTaskCompletedReport(string employeeId, int priority, string startDate, string endDate)
+        {
+            return View(this.GetTaskCompletedOnTime(employeeId, priority, startDate, endDate).ToList());
         }
 
         [HttpGet]
@@ -166,7 +178,7 @@ namespace TaskManager.Controllers
         }
 
         [HttpGet]
-        public List<EmployeeTaskReport> getTaskCompletedOnTimeByEmployee(String empID, int Priority)
+        public List<EmployeeTaskReport> getTaskCompletedOnTimeByEmployee(String empID, int priority, string startDate, string endDate)
         {
             List<EmployeeTaskReport> employees = new List<EmployeeTaskReport>();
             try
@@ -180,11 +192,18 @@ namespace TaskManager.Controllers
                     var command = connection.CreateCommand();
                     command.CommandType = CommandType.StoredProcedure;
                     command.CommandText = "[dbo].[TaskCompletedOnTime]";
-                    //command.Parameters.Add(new SqlParameter("@StartDate", "10-7-2022"));
-                    //command.Parameters.Add(new SqlParameter("@EndDate", "17-07-2022"));
-                    //command.Parameters.Add(new SqlParameter("@Priority", "high"));
-                    command.Parameters.Add(new SqlParameter("@AssignedTo", empID));
-                    command.Parameters.Add(new SqlParameter("@PriorityID", Priority));
+                    DateTime dateTime = Convert.ToDateTime(startDate);
+                    DateTime end = Convert.ToDateTime(endDate);
+
+                    var empId = (object)empID ?? DBNull.Value;
+                    var prorityParm = (object)priority ?? DBNull.Value;
+                    var statusParam = DBNull.Value;
+                    var sessionStartDate = (object)dateTime ?? DBNull.Value;
+                    var sessionEndDate = (object)end ?? DBNull.Value;
+                    command.Parameters.Add(new SqlParameter("@StartDate", sessionStartDate));
+                    command.Parameters.Add(new SqlParameter("@EndDate", sessionEndDate));
+                    command.Parameters.Add(new SqlParameter("@PriorityID", prorityParm));
+                    command.Parameters.Add(new SqlParameter("@AssignedTo", empId));
                     var reader = command.ExecuteReader();
 
 
