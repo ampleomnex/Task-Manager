@@ -12,8 +12,8 @@ using TaskManager.Data;
 namespace TaskManager.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220710091304_UpdatedEstTimeDatatype_InTasksTable")]
-    partial class UpdatedEstTimeDatatype_InTasksTable
+    [Migration("20220722062602_EpicTableadded")]
+    partial class EpicTableadded
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -298,13 +298,17 @@ namespace TaskManager.Data.Migrations
                     b.ToTable("Departments");
                 });
 
-            modelBuilder.Entity("TaskManager.Models.EmployeesDetails", b =>
+            modelBuilder.Entity("TaskManager.Models.EmployeeDetails", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
@@ -324,24 +328,46 @@ namespace TaskManager.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("FunctionID")
+                        .HasColumnType("int");
+
                     b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("ModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("PhoneNumber")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Reportingto")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("RoleName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("TeamID")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CreatedBy");
+
                     b.HasIndex("DepartmentID");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("FunctionID");
 
-                    b.ToTable("Employees");
+                    b.HasIndex("Reportingto");
+
+                    b.HasIndex("RoleName");
+
+                    b.HasIndex("TeamID");
+
+                    b.ToTable("EmployeeDetails");
                 });
 
             modelBuilder.Entity("TaskManager.Models.Epics", b =>
@@ -429,7 +455,7 @@ namespace TaskManager.Data.Migrations
                     b.ToTable("OptionTypes");
                 });
 
-            modelBuilder.Entity("TaskManager.Models.Project", b =>
+            modelBuilder.Entity("TaskManager.Models.Projects", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -437,8 +463,9 @@ namespace TaskManager.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("CreatedBy")
-                        .HasColumnType("int");
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
@@ -456,85 +483,13 @@ namespace TaskManager.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CreatedBy");
+
                     b.HasIndex("CustomerID");
 
                     b.HasIndex("spoc");
 
                     b.ToTable("Projects");
-                });
-
-            modelBuilder.Entity("TaskManager.Models.Tasks", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("AssignedTo")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("Comments")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CreatedBy")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("DueDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("EpicsID")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("EstTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("ModifiedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("PlannedStart")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("PriorityID")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ProjectID")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("RequestDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("RequestedBy")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("Status")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("TaskName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AssignedTo");
-
-                    b.HasIndex("CreatedBy");
-
-                    b.HasIndex("EpicsID");
-
-                    b.HasIndex("PriorityID");
-
-                    b.HasIndex("ProjectID");
-
-                    b.HasIndex("RequestedBy");
-
-                    b.ToTable("ETasks");
                 });
 
             modelBuilder.Entity("TaskManager.Models.Team", b =>
@@ -636,19 +591,53 @@ namespace TaskManager.Data.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("TaskManager.Models.EmployeesDetails", b =>
+            modelBuilder.Entity("TaskManager.Models.EmployeeDetails", b =>
                 {
+                    b.HasOne("TaskManager.Models.AppUser", "User")
+                        .WithMany()
+                        .HasForeignKey("CreatedBy")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("TaskManager.Models.Department", "Departments")
                         .WithMany()
                         .HasForeignKey("DepartmentID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("TaskManager.Models.AppUser", "User")
+                    b.HasOne("TaskManager.Models.Function", "Functions")
                         .WithMany()
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("FunctionID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("TaskManager.Models.AppUser", "ReportingUser")
+                        .WithMany()
+                        .HasForeignKey("Reportingto")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", "Roles")
+                        .WithMany()
+                        .HasForeignKey("RoleName")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("TaskManager.Models.Team", "Teams")
+                        .WithMany()
+                        .HasForeignKey("TeamID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Departments");
+
+                    b.Navigation("Functions");
+
+                    b.Navigation("ReportingUser");
+
+                    b.Navigation("Roles");
+
+                    b.Navigation("Teams");
 
                     b.Navigation("User");
                 });
@@ -661,7 +650,7 @@ namespace TaskManager.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("TaskManager.Models.Project", "Projects")
+                    b.HasOne("TaskManager.Models.Projects", "Projects")
                         .WithMany()
                         .HasForeignKey("ProjectID")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -689,8 +678,14 @@ namespace TaskManager.Data.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("TaskManager.Models.Project", b =>
+            modelBuilder.Entity("TaskManager.Models.Projects", b =>
                 {
+                    b.HasOne("TaskManager.Models.AppUser", "CreatedUser")
+                        .WithMany()
+                        .HasForeignKey("CreatedBy")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("TaskManager.Models.Customer", "Customers")
                         .WithMany()
                         .HasForeignKey("CustomerID")
@@ -703,60 +698,11 @@ namespace TaskManager.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.Navigation("CreatedUser");
+
                     b.Navigation("Customers");
 
                     b.Navigation("user");
-                });
-
-            modelBuilder.Entity("TaskManager.Models.Tasks", b =>
-                {
-                    b.HasOne("TaskManager.Models.AppUser", "AssignedUser")
-                        .WithMany()
-                        .HasForeignKey("AssignedTo")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("TaskManager.Models.AppUser", "User")
-                        .WithMany()
-                        .HasForeignKey("CreatedBy")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("TaskManager.Models.Epics", "Epics")
-                        .WithMany()
-                        .HasForeignKey("EpicsID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("TaskManager.Models.OptionType", "OptionType")
-                        .WithMany()
-                        .HasForeignKey("PriorityID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("TaskManager.Models.Project", "Projects")
-                        .WithMany()
-                        .HasForeignKey("ProjectID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("TaskManager.Models.AppUser", "RequestedUser")
-                        .WithMany()
-                        .HasForeignKey("RequestedBy")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("AssignedUser");
-
-                    b.Navigation("Epics");
-
-                    b.Navigation("OptionType");
-
-                    b.Navigation("Projects");
-
-                    b.Navigation("RequestedUser");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("TaskManager.Models.Team", b =>

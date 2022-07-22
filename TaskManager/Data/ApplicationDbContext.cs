@@ -24,11 +24,11 @@ namespace TaskManager.Data
 
         public DbSet<EmployeeDetails> EmployeeDetails { get; set; }
 
-        public DbSet<Project> Projects { get; set; }
+        public DbSet<Projects> Projects { get; set; }
 
         public DbSet<Epics> Epics { get; set; }
 
-        public DbSet<Tasks> ETasks { get; set; }
+        public DbSet<ETasks> EmpTasks { get; set; }
 
         public DbSet<OptionType> OptionTypes { get; set; }
 

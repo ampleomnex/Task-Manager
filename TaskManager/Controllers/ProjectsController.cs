@@ -17,9 +17,10 @@ namespace TaskManager.Controllers
         private readonly ApplicationDbContext _context;
         private readonly UserManager<AppUser> _userManager;
 
-        public ProjectsController(ApplicationDbContext context)
+        public ProjectsController(ApplicationDbContext context, UserManager<AppUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         // GET: Projects
@@ -53,7 +54,7 @@ namespace TaskManager.Controllers
         public IActionResult Create()
         {
             ViewData["CustomerID"] = new SelectList(_context.Customers, "Id", "CustomerName");
-            ViewData["spoc"] = new SelectList(_context.Users, "Id", "UserName");
+            ViewData["spoc"] = new SelectList(_context.Users, "Id", "FirstName");
             return View();
         }
 
@@ -64,10 +65,14 @@ namespace TaskManager.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(ProjectRequest projectRequest)
         {
-            Project project = new Project(projectRequest);
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+            Projects project = new Projects();
             if (ModelState.IsValid)
             {
-                var user = await _userManager.GetUserAsync(HttpContext.User);
+                project.ProjectName = projectRequest.ProjectName;
+                project.spoc = projectRequest.spoc;
+                project.CustomerID = projectRequest.CustomerID;
+                project.CreatedBy = user.Id;
                 _context.Add(project);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));

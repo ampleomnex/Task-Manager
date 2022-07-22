@@ -3,9 +3,9 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TaskManager.Models
 {
-    public class Tasks
+    public class ETasks
     {
-        public Tasks()
+        public ETasks()
         {
             this.CreatedDate = DateTime.UtcNow;
         }
@@ -29,7 +29,8 @@ namespace TaskManager.Models
         [Required(ErrorMessage = "Project Name is required.")]
         [Display(Name = "Project Name")]
         public virtual int ProjectID { get; set; }
-        public virtual Project Projects { get; set; }
+        [ForeignKey("ProjectID")]
+        public virtual Projects Projects { get; set; }
 
         [Required(ErrorMessage = "Epic is required.")]
         [Display(Name = "Epic")]

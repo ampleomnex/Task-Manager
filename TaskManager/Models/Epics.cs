@@ -15,8 +15,10 @@ namespace TaskManager.Models
         public string EpicsName { get; set; }
         [Required(ErrorMessage = "Project Name is required.")]
         [Display(Name = "Project Name")]
+
         public virtual int ProjectID { get; set; }
-        public virtual Project Projects { get; set; }
+        [ForeignKey("ProjectID")]
+        public virtual Projects Projects { get; set; }
         [Display(Name = "CreatedBy")]
         public string CreatedBy { get; set; }
         [ForeignKey("CreatedBy")]

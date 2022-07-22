@@ -29,7 +29,7 @@ namespace TaskManager.Controllers
         // GET: Tasks
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.ETasks
+            var applicationDbContext = _context.EmpTasks
                 .Include(t => t.AssignedUser)
                 .Include(t => t.Epics)
                 .Include(t => t.Projects)
@@ -42,12 +42,12 @@ namespace TaskManager.Controllers
         // GET: Tasks/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.ETasks == null)
+            if (id == null || _context.EmpTasks == null)
             {
                 return NotFound();
             }
 
-            var tasks = await _context.ETasks
+            var tasks = await _context.EmpTasks
                 .Include(t => t.AssignedUser)
                 .Include(t => t.Epics)
                 .Include(t => t.Projects)
@@ -86,7 +86,7 @@ namespace TaskManager.Controllers
         public async Task<IActionResult> Create(TasksRequest taskrequest)
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);
-            Tasks tasks = new Tasks();
+            ETasks tasks = new ETasks();
             if (ModelState.IsValid)
             {
                 tasks.TaskName = taskrequest.TaskName;
@@ -117,12 +117,12 @@ namespace TaskManager.Controllers
         // GET: Tasks/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.ETasks == null)
+            if (id == null || _context.EmpTasks == null)
             {
                 return NotFound();
             }
 
-            var tasks = await _context.ETasks.FindAsync(id);
+            var tasks = await _context.EmpTasks.FindAsync(id);
             if (tasks == null)
             {
                 return NotFound();
@@ -146,7 +146,7 @@ namespace TaskManager.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, TasksRequest taskrequest)
         {
-            var tasks = await _context.ETasks.FindAsync(id);
+            var tasks = await _context.EmpTasks.FindAsync(id);
 
             if (ModelState.IsValid)
             {
@@ -194,12 +194,12 @@ namespace TaskManager.Controllers
         // GET: Tasks/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.ETasks == null)
+            if (id == null || _context.EmpTasks == null)
             {
                 return NotFound();
             }
 
-            var tasks = await _context.ETasks
+            var tasks = await _context.EmpTasks
                 .Include(t => t.AssignedUser)
                 .Include(t => t.Epics)
                 .Include(t => t.Projects)
@@ -220,14 +220,14 @@ namespace TaskManager.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.ETasks == null)
+            if (_context.EmpTasks == null)
             {
                 return Problem("Entity set 'ApplicationDbContext.ETasks'  is null.");
             }
-            var tasks = await _context.ETasks.FindAsync(id);
+            var tasks = await _context.EmpTasks.FindAsync(id);
             if (tasks != null)
             {
-                _context.ETasks.Remove(tasks);
+                _context.EmpTasks.Remove(tasks);
             }
             
             await _context.SaveChangesAsync();
@@ -236,7 +236,7 @@ namespace TaskManager.Controllers
 
         private bool TasksExists(int id)
         {
-          return (_context.ETasks?.Any(e => e.Id == id)).GetValueOrDefault();
+          return (_context.EmpTasks?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }
