@@ -32,6 +32,7 @@ namespace TaskManager.Controllers
                 .Include(e => e.Projects)
                 .Include(e => e.RequestedUser)
                 .Include(e => e.User)
+                .Include(e => e.StatusType)
                 .Where(e => e.AssignedTo == user.Id).ToListAsync();
             return View(applicationDbContext);
         }
@@ -51,6 +52,7 @@ namespace TaskManager.Controllers
                 .Include(e => e.Projects)
                 .Include(e => e.RequestedUser)
                 .Include(e => e.User)
+                .Include(e => e.StatusType)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (eTasks == null)
             {
@@ -61,7 +63,7 @@ namespace TaskManager.Controllers
         }
 
         // GET: EmployeeDashboard/Create
-        public IActionResult Create()
+        /*public IActionResult Create()
         {
             ViewData["AssignedTo"] = new SelectList(_context.Users, "Id", "Id");
             ViewData["EpicsID"] = new SelectList(_context.Epics, "Id", "Id");
@@ -70,12 +72,12 @@ namespace TaskManager.Controllers
             ViewData["RequestedBy"] = new SelectList(_context.Users, "Id", "Id");
             ViewData["CreatedBy"] = new SelectList(_context.Users, "Id", "Id");
             return View();
-        }
+        }*/
 
         // POST: EmployeeDashboard/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
+       /* [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,TaskName,PriorityID,EstTime,ProjectID,EpicsID,AssignedTo,RequestedBy,RequestDate,PlannedStart,DueDate,Status,Comments,CreatedBy,CreatedDate,ModifiedDate")] ETasks eTasks)
         {
@@ -92,7 +94,7 @@ namespace TaskManager.Controllers
             ViewData["RequestedBy"] = new SelectList(_context.Users, "Id", "Id", eTasks.RequestedBy);
             ViewData["CreatedBy"] = new SelectList(_context.Users, "Id", "Id", eTasks.CreatedBy);
             return View(eTasks);
-        }
+        }*/
 
         // GET: EmployeeDashboard/Edit/5
         public async Task<IActionResult> Edit(int? id)
@@ -174,6 +176,7 @@ namespace TaskManager.Controllers
                 .Include(e => e.Projects)
                 .Include(e => e.RequestedUser)
                 .Include(e => e.User)
+                .Include(e => e.StatusType)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (eTasks == null)
             {

@@ -4,11 +4,9 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Dashboard</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+
 <table class="table">
     <thead>
         <tr>
@@ -48,15 +46,6 @@
             <th>
                 @Html.DisplayNameFor(model => model.Comments)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.User)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CreatedDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ModifiedDate)
-            </th>
             <th></th>
         </tr>
     </thead>
@@ -67,7 +56,7 @@
                 @Html.DisplayFor(modelItem => item.TaskName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.OptionType.Id)
+                @Html.DisplayFor(modelItem => item.OptionType.OptionName)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.EstTime)
@@ -79,10 +68,10 @@
                 @Html.DisplayFor(modelItem => item.Epics.Id)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.AssignedUser.Id)
+                @Html.DisplayFor(modelItem => item.AssignedUser.FirstName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.RequestedUser.Id)
+                @Html.DisplayFor(modelItem => item.RequestedUser.FirstName)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.RequestDate)
@@ -98,15 +87,6 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Comments)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.User.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CreatedDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ModifiedDate)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
