@@ -69,7 +69,8 @@ namespace TaskManager.Controllers
             IEnumerable employeeList = await _userManager.GetUsersInRoleAsync("employee");
             IEnumerable managerList = await _userManager.GetUsersInRoleAsync("manager");
 
-            ViewData["PriorityID"] = new SelectList(_context.OptionTypes, "Id", "OptionName");
+            /*ViewData["PriorityID"] = new SelectList(_context.OptionTypes, "Id", "OptionName");*/
+            ViewData["PriorityID"] = new SelectList(_context.OptionTypes.Where(m => m.Type == "Priority"), "Id", "OptionName");
             ViewData["AssignedTo"] = new SelectList(employeeList, "Id", "FirstName");
             ViewData["EpicsID"] = new SelectList(_context.Epics, "Id", "EpicsName");
             ViewData["ProjectID"] = new SelectList(_context.Projects, "Id", "ProjectName");
@@ -105,7 +106,7 @@ namespace TaskManager.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["PriorityID"] = new SelectList(_context.OptionTypes, "Id", "OptionName");
+            ViewData["PriorityID"] = new SelectList(_context.OptionTypes.Where(m => m.Type == "Priority"), "Id", "OptionName");
             ViewData["AssignedTo"] = new SelectList(_context.Users, "Id", "FirstName", tasks.AssignedTo);
             ViewData["EpicsID"] = new SelectList(_context.Epics, "Id", "EpicsName", tasks.EpicsID);
             ViewData["ProjectID"] = new SelectList(_context.Projects, "Id", "ProjectName", tasks.ProjectID);
@@ -130,7 +131,7 @@ namespace TaskManager.Controllers
             IEnumerable employeeList = await _userManager.GetUsersInRoleAsync("employee");
             IEnumerable managerList = await _userManager.GetUsersInRoleAsync("manager");
 
-            ViewData["PriorityID"] = new SelectList(_context.OptionTypes, "Id", "OptionName");
+            ViewData["PriorityID"] = new SelectList(_context.OptionTypes.Where(m => m.Type == "Priority"), "Id", "OptionName",tasks.PriorityID);
             ViewData["AssignedTo"] = new SelectList(employeeList, "Id", "FirstName", tasks.AssignedTo);
             ViewData["EpicsID"] = new SelectList(_context.Epics, "Id", "EpicsName", tasks.EpicsID);
             ViewData["ProjectID"] = new SelectList(_context.Projects, "Id", "ProjectName", tasks.ProjectID);

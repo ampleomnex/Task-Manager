@@ -1,0 +1,119 @@
+﻿@model IEnumerable<TaskManager.Models.ETasks>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.TaskName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OptionType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EstTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Projects)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Epics)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AssignedUser)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RequestedUser)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RequestDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PlannedStart)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DueDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Status)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Comments)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.User)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreatedDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ModifiedDate)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.TaskName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OptionType.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EstTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Projects.ProjectName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Epics.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AssignedUser.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RequestedUser.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RequestDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PlannedStart)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DueDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Comments)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.User.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ModifiedDate)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
