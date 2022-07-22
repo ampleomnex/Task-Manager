@@ -59,7 +59,10 @@ namespace TaskManager.Models
         [Display(Name = "Due Date")]
         public DateTime DueDate { get; set; }
 
-        public string Status { get; set; }
+        public virtual int Status { get; set; }
+        [ForeignKey("Status")]
+
+        public virtual OptionType StatusType { get; set; }
         public string? Comments { get; set; }
 
         [Display(Name = "CreatedBy")]
