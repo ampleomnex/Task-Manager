@@ -100,7 +100,7 @@ namespace TaskManager.Controllers
                 tasks.RequestedBy = taskrequest.RequestedBy;
                 tasks.RequestDate = taskrequest.RequestDate;
                 tasks.PlannedStart = taskrequest.PlannedStart;
-                tasks.Status = 1;
+                tasks.Status = 10;
                 tasks.User = user;
                 _context.Add(tasks);
                 await _context.SaveChangesAsync();
@@ -165,7 +165,7 @@ namespace TaskManager.Controllers
                         tasks.RequestedBy = taskrequest.RequestedBy;
                         tasks.RequestDate = taskrequest.RequestDate;
                         tasks.PlannedStart = taskrequest.PlannedStart;
-                        tasks.Status = 1;
+                        tasks.Status = 10;
                         tasks.ModifiedDate = DateTime.UtcNow;
                     }
                     _context.Update(tasks);

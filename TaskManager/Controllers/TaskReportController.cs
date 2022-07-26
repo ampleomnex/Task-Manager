@@ -37,7 +37,7 @@ namespace TaskManager.Controllers
         public async Task getPriority()
         {
             var list = _context.OptionTypes.ToList();
-            ViewData["Priority"] = new SelectList(list, "Id", "OptionName");
+            ViewData["Priority"] = new SelectList(list.Where(m => m.Type == "Priority"), "Id", "OptionName");
 
         }
 
