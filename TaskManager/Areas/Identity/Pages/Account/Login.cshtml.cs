@@ -22,11 +22,13 @@ namespace TaskManager.Areas.Identity.Pages.Account
     {
         private readonly SignInManager<AppUser> _signInManager;
         private readonly ILogger<LoginModel> _logger;
+        private readonly UserManager<AppUser> _userManager;
 
-        public LoginModel(SignInManager<AppUser> signInManager, ILogger<LoginModel> logger)
+        public LoginModel(SignInManager<AppUser> signInManager, ILogger<LoginModel> logger, UserManager<AppUser> userManager)
         {
             _signInManager = signInManager;
             _logger = logger;
+            _userManager = userManager;
         }
 
         /// <summary>
@@ -116,7 +118,9 @@ namespace TaskManager.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
-                    if (User.IsInRole("admin"))
+                    var user = await _userManager.FindByEmailAsync(Input.Email);
+                    var roles = await _userManager.GetRolesAsync(user);
+                    if (roles[0] == "admin")
                     {
                         return LocalRedirect(returnUrl);
                     }
