@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -109,11 +110,15 @@ namespace TaskManager.Controllers
             {
                 return NotFound();
             }
-            ViewData["AssignedTo"] = new SelectList(_context.Users, "Id", "Id", eTasks.AssignedTo);
+
+            IEnumerable employeeList = await _userManager.GetUsersInRoleAsync("employee");
+            IEnumerable managerList = await _userManager.GetUsersInRoleAsync("manager");
+
+            ViewData["AssignedTo"] = new SelectList(employeeList, "Id", "FirstName", eTasks.AssignedTo);
             ViewData["EpicsID"] = new SelectList(_context.Epics, "Id", "EpicsName", eTasks.EpicsID);
             ViewData["PriorityID"] = new SelectList(_context.OptionTypes.Where(m => m.Type == "Priority"), "Id", "OptionName", eTasks.PriorityID);
             ViewData["ProjectID"] = new SelectList(_context.Projects, "Id", "ProjectName", eTasks.ProjectID);
-            ViewData["RequestedBy"] = new SelectList(_context.Users, "Id", "Id", eTasks.RequestedBy);
+            ViewData["RequestedBy"] = new SelectList(_context.Users, "Id", "FirstName", eTasks.RequestedBy);
             ViewData["CreatedBy"] = new SelectList(_context.Users, "Id", "Id", eTasks.CreatedBy);
             ViewData["Status"] = new SelectList(_context.OptionTypes.Where(m => m.Type == "Status"), "Id", "OptionName", eTasks.Status);
 
