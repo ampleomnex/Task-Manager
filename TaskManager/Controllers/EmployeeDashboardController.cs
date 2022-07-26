@@ -110,7 +110,7 @@ namespace TaskManager.Controllers
                 return NotFound();
             }
             ViewData["AssignedTo"] = new SelectList(_context.Users, "Id", "Id", eTasks.AssignedTo);
-            ViewData["EpicsID"] = new SelectList(_context.Epics, "Id", "Id", eTasks.EpicsID);
+            ViewData["EpicsID"] = new SelectList(_context.Epics, "Id", "EpicsName", eTasks.EpicsID);
             ViewData["PriorityID"] = new SelectList(_context.OptionTypes.Where(m => m.Type == "Priority"), "Id", "OptionName", eTasks.PriorityID);
             ViewData["ProjectID"] = new SelectList(_context.Projects, "Id", "ProjectName", eTasks.ProjectID);
             ViewData["RequestedBy"] = new SelectList(_context.Users, "Id", "Id", eTasks.RequestedBy);
@@ -153,7 +153,7 @@ namespace TaskManager.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["AssignedTo"] = new SelectList(_context.Users, "Id", "Id", eTasks.AssignedTo);
-            ViewData["EpicsID"] = new SelectList(_context.Epics, "Id", "Id", eTasks.EpicsID);
+            ViewData["EpicsID"] = new SelectList(_context.Epics, "Id", "EpicsName", eTasks.EpicsID);
             ViewData["PriorityID"] = new SelectList(_context.OptionTypes, "Id", "Id", eTasks.PriorityID);
             ViewData["ProjectID"] = new SelectList(_context.Projects, "Id", "ProjectName", eTasks.ProjectID);
             ViewData["RequestedBy"] = new SelectList(_context.Users, "Id", "Id", eTasks.RequestedBy);
