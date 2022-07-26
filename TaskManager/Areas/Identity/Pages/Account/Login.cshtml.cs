@@ -116,7 +116,14 @@ namespace TaskManager.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
-                    return LocalRedirect(returnUrl);
+                    if (User.IsInRole("admin"))
+                    {
+                        return LocalRedirect(returnUrl);
+                    }
+                    else
+                    {
+                        return LocalRedirect("~/EmployeeDashboard");
+                    }    
                 }
                 if (result.RequiresTwoFactor)
                 {
