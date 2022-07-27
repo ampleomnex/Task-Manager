@@ -14,88 +14,127 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/TaskManager.styles.css" asp-append-version="true" />
 </head>
-<body>
-    <header>
-        <nav class="navbar navbar-expand-sm bg-dark navbar-dark ">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Task Manager</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+@if (SignInManager.IsSignedIn(User))
+{
+    <body>
+        <header>
+            <nav class="navbar navbar-expand-sm bg-dark navbar-dark ">
+                <div class="container-fluid">
+                    <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Task Manager</a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        @if (SignInManager.IsSignedIn(User))
-                        {
-                            if (User.IsInRole("admin")) //Admin user
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                        <ul class="navbar-nav flex-grow-1">
+                            @if (SignInManager.IsSignedIn(User))
                             {
-                                <li class="nav-item">
-                                    <a class="nav-link" asp-area="" asp-controller="Tasks" asp-action="Index">Task</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" asp-area="" asp-controller="TaskReport" asp-action="Index">Reports</a>
-                                </li>                        
+                                if (User.IsInRole("admin")) //Admin user
+                                {
+                                    <li class="nav-item">
+                                        <a class="nav-link" asp-area="" asp-controller="Tasks" asp-action="Index">Task</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" asp-area="" asp-controller="TaskReport" asp-action="Index">Reports</a>
+                                    </li>                        
 
-                                <li class="nav-item dropdown">
-                                   <a class="dropdown-toggle nav-link" data-bs-toggle="dropdown" aria-expanded="false"><span class="glyphicon glyphicon-list-alt"></span> Manage <b class="caret"></b></a>
-                                     <ul class="dropdown-menu">
-                                         <li class="nav-item">
-                                            <a class="nav-link text-dark" asp-area="" asp-controller="EmployeesDetails" asp-action="Index">Employee</a>
-                                        </li>
-                                         <li class="nav-item">
-                                            <a class="nav-link text-dark" asp-area="" asp-controller="Projects" asp-action="Index">Project</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link text-dark" asp-area="" asp-controller="Functions" asp-action="Index">Functions</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link text-dark" asp-area="" asp-controller="Epics" asp-action="Index">Epic</a>
-                                        </li>
-                                         <li class="nav-item">
-                                            <a class="nav-link text-dark" asp-area="" asp-controller="Teams" asp-action="Index">Team</a>
-                                        </li>
-                                         <li class="nav-item">
-                                            <a class="nav-link text-dark" asp-area="" asp-controller="Customers" asp-action="Index">Customer</a>
-                                        </li>
-                                
-                                         <li class="nav-item">
-                                            <a class="nav-link text-dark" asp-area="" asp-controller="Departments" asp-action="Index">Department</a>
-                                        </li>
-                                    </ul>
-                                </li>
-                            }
-                            else //Employees
-                            {
-                                <li class="nav-item">
-                                    <a class="nav-link" asp-area="" asp-controller="EmployeeDashboard" asp-action="Index">Dashboard</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" asp-area="" asp-controller="Explore" asp-action="Index">Explore</a>
-                                </li>
-                            }
+                                    <li class="nav-item dropdown">
+                                        <a class="dropdown-toggle nav-link" data-bs-toggle="dropdown" aria-expanded="false"><span class="glyphicon glyphicon-list-alt"></span> Manage <b class="caret"></b></a>
+                                        <ul class="dropdown-menu">
+                                            <li class="nav-item">
+                                                <a class="nav-link text-dark" asp-area="" asp-controller="EmployeesDetails" asp-action="Index">Employee</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link text-dark" asp-area="" asp-controller="Projects" asp-action="Index">Project</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link text-dark" asp-area="" asp-controller="Functions" asp-action="Index">Functions</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link text-dark" asp-area="" asp-controller="Epics" asp-action="Index">Epic</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link text-dark" asp-area="" asp-controller="Teams" asp-action="Index">Team</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link text-dark" asp-area="" asp-controller="Customers" asp-action="Index">Customer</a>
+                                            </li>
 
-                            
-                        }
-                    </ul>
-                    <partial name="_LoginPartial" />
+                                            <li class="nav-item">
+                                                <a class="nav-link text-dark" asp-area="" asp-controller="Departments" asp-action="Index">Department</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                }
+                                else //Employees
+                                {
+                                    <li class="nav-item">
+                                        <a class="nav-link" asp-area="" asp-controller="EmployeeDashboard" asp-action="Index">Dashboard</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" asp-area="" asp-controller="Explore" asp-action="Index">Explore</a>
+                                    </li>
+                                }
+
+
+                            }
+                        </ul>
+                        <partial name="_LoginPartial" />
+                    </div>
                 </div>
-            </div>
-        </nav>
-    </header>
-    <div class="container-fluid">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
+            </nav>
+        </header>
 
-     <footer class="footer text-muted">
-        <div class="container">
-           <h6> &copy; 2022 - Task Manager - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a></h6>
+        <div class="container-fluid">
+            <main role="main" class="pb-3">
+                @RenderBody()
+            </main>
         </div>
-    </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    @await RenderSectionAsync("Scripts", required: false)
-</body>
+        <footer class="footer text-muted">
+            <div class="container">
+                <h6> &copy; 2022 - Task Manager - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a></h6>
+            </div>
+        </footer>
+        <script src="~/lib/jquery/dist/jquery.min.js"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="~/js/site.js" asp-append-version="true"></script>
+        @await RenderSectionAsync("Scripts", required: false)
+    </body>
+}
+else
+{
+   <body class="lopbg">
+        <header>
+            <nav class="navbar navbar-expand-sm bg-dark navbar-dark ">
+                <div class="container-fluid">
+                    <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Task Manager</a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                        <ul class="navbar-nav flex-grow-1">
+                        </ul>
+                        <partial name="_LoginPartial" />
+                    </div>
+                </div>
+            </nav>
+        </header>
+
+        <div class="container-fluid">
+            <main role="main" class="pb-3">
+                @RenderBody()
+            </main>
+        </div>
+        <footer class="footer text-muted">
+            <div class="container">
+                <h6> &copy; 2022 - Task Manager - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a></h6>
+            </div>
+        </footer>
+        <script src="~/lib/jquery/dist/jquery.min.js"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="~/js/site.js" asp-append-version="true"></script>
+        @await RenderSectionAsync("Scripts", required: false)
+    </body>  
+}
 </html>

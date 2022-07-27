@@ -130,9 +130,11 @@ namespace TaskManager.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,TaskName,PriorityID,EstTime,ProjectID,EpicsID,AssignedTo,RequestedBy,RequestDate,PlannedStart,DueDate,Status,Comments,CreatedBy,CreatedDate,ModifiedDate")] ETasks eTasks)
+        public async Task<IActionResult> Edit(int id,ETasks eTasks)
         {
-            if (id != eTasks.Id)
+            var empTasks = await _context.EmpTasks.FindAsync(id);
+
+            if (id != empTasks.Id)
             {
                 return NotFound();
             }
@@ -141,12 +143,27 @@ namespace TaskManager.Controllers
             {
                 try
                 {
-                    _context.Update(eTasks);
+                    if(empTasks != null)
+                    {
+                        empTasks.TaskName = eTasks.TaskName;
+                        empTasks.PriorityID = eTasks.PriorityID;
+                        empTasks.ProjectID = eTasks.ProjectID;
+                        empTasks.EpicsID = eTasks.EpicsID;
+                        empTasks.DueDate = eTasks.DueDate;
+                        empTasks.EstTime = eTasks.EstTime;
+                        empTasks.AssignedTo = eTasks.AssignedTo;
+                        empTasks.RequestedBy = eTasks.RequestedBy;
+                        empTasks.RequestDate = eTasks.RequestDate;
+                        empTasks.PlannedStart = eTasks.PlannedStart;
+                        empTasks.Status = eTasks.Status;
+                        empTasks.ModifiedDate = DateTime.UtcNow;
+                    }
+                    _context.Update(empTasks);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ETasksExists(eTasks.Id))
+                    if (!ETasksExists(empTasks.Id))
                     {
                         return NotFound();
                     }
@@ -157,12 +174,15 @@ namespace TaskManager.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AssignedTo"] = new SelectList(_context.Users, "Id", "Id", eTasks.AssignedTo);
+            IEnumerable employeeList = await _userManager.GetUsersInRoleAsync("employee");
+            IEnumerable managerList = await _userManager.GetUsersInRoleAsync("manager");
+            ViewData["AssignedTo"] = new SelectList(employeeList, "Id", "FirstName", eTasks.AssignedTo);
             ViewData["EpicsID"] = new SelectList(_context.Epics, "Id", "EpicsName", eTasks.EpicsID);
-            ViewData["PriorityID"] = new SelectList(_context.OptionTypes, "Id", "Id", eTasks.PriorityID);
+            ViewData["PriorityID"] = new SelectList(_context.OptionTypes.Where(m => m.Type == "Priority"), "Id", "OptionName", eTasks.PriorityID);
             ViewData["ProjectID"] = new SelectList(_context.Projects, "Id", "ProjectName", eTasks.ProjectID);
-            ViewData["RequestedBy"] = new SelectList(_context.Users, "Id", "Id", eTasks.RequestedBy);
+            ViewData["RequestedBy"] = new SelectList(_context.Users, "Id", "FirstName", eTasks.RequestedBy);
             ViewData["CreatedBy"] = new SelectList(_context.Users, "Id", "Id", eTasks.CreatedBy);
+            ViewData["Status"] = new SelectList(_context.OptionTypes.Where(m => m.Type == "Status"), "Id", "OptionName", eTasks.Status);
             return View(eTasks);
         }
 

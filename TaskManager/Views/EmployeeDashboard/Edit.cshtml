@@ -13,67 +13,67 @@
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
-            <div class="form-group">
-                <label asp-for="TaskName" class="control-label"></label>
+            <div class="mb-3">
+                <label asp-for="TaskName" class="form-label"></label>
                 <input asp-for="TaskName" class="form-control" />
                 <span asp-validation-for="TaskName" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="PriorityID" class="control-label"></label>
+            <div class="mb-3">
+                <label asp-for="PriorityID" class="form-label"></label>
                 <select asp-for="PriorityID" class="form-control" asp-items="ViewBag.PriorityID"></select>
                 <span asp-validation-for="PriorityID" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="EstTime" class="control-label"></label>
+            <div class="mb-3">
+                <label asp-for="EstTime" class="form-label"></label>
                 <input asp-for="EstTime" class="form-control" />
                 <span asp-validation-for="EstTime" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="ProjectID" class="control-label"></label>
+            <div class="mb-3">
+                <label asp-for="ProjectID" class="form-label"></label>
                 <select asp-for="ProjectID" class="form-control" asp-items="ViewBag.ProjectID"></select>
                 <span asp-validation-for="ProjectID" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="EpicsID" class="control-label"></label>
+            <div class="mb-3">
+                <label asp-for="EpicsID" class="form-label"></label>
                 <select asp-for="EpicsID" class="form-control" asp-items="ViewBag.EpicsID"></select>
                 <span asp-validation-for="EpicsID" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="AssignedTo" class="control-label"></label>
+            <div class="mb-3">
+                <label asp-for="AssignedTo" class="form-label"></label>
                 <select asp-for="AssignedTo" class="form-control" asp-items="ViewBag.AssignedTo"></select>
                 <span asp-validation-for="AssignedTo" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="RequestedBy" class="control-label"></label>
+            <div class="mb-3">
+                <label asp-for="RequestedBy" class="form-label"></label>
                 <select asp-for="RequestedBy" class="form-control" asp-items="ViewBag.RequestedBy"></select>
                 <span asp-validation-for="RequestedBy" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="RequestDate" class="control-label"></label>
+            <div class="mb-3">
+                <label asp-for="RequestDate" class="form-label"></label>
                 <input asp-for="RequestDate" class="form-control" />
                 <span asp-validation-for="RequestDate" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="PlannedStart" class="control-label"></label>
+            <div class="mb-3">
+                <label asp-for="PlannedStart" class="form-label"></label>
                 <input asp-for="PlannedStart" class="form-control" />
                 <span asp-validation-for="PlannedStart" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="DueDate" class="control-label"></label>
+            <div class="mb-3">
+                <label asp-for="DueDate" class="form-label"></label>
                 <input asp-for="DueDate" class="form-control" />
                 <span asp-validation-for="DueDate" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Status" class="control-label"></label>
+            <div class="mb-3">
+                <label asp-for="Status" class="form-label"></label>
                 <select asp-for="Status" class="form-control" asp-items="ViewBag.Status"></select>
                 <span asp-validation-for="Status" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Comments" class="control-label"></label>
+            <div class="mb-3">
+                <label asp-for="Comments" class="form-label"></label>
                 <input asp-for="Comments" class="form-control" />
                 <span asp-validation-for="Comments" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="mb-3">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </form>
