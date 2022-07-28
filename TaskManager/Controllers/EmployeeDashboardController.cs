@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using TaskManager.Data;
 using TaskManager.Models;
+using TaskManager.Models.Request;
 
 namespace TaskManager.Controllers
 {
@@ -130,7 +131,7 @@ namespace TaskManager.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id,ETasks eTasks)
+        public async Task<IActionResult> Edit(int id, EmployeeTaskRequest eTasks)
         {
             var empTasks = await _context.EmpTasks.FindAsync(id);
 
@@ -157,6 +158,8 @@ namespace TaskManager.Controllers
                         empTasks.PlannedStart = eTasks.PlannedStart;
                         empTasks.Status = eTasks.Status;
                         empTasks.ModifiedDate = DateTime.UtcNow;
+                        empTasks.Comments = eTasks.Comments;
+                        empTasks.TimeSpent = empTasks.TimeSpent + eTasks.TimeSpent;
                     }
                     _context.Update(empTasks);
                     await _context.SaveChangesAsync();
@@ -181,7 +184,7 @@ namespace TaskManager.Controllers
             ViewData["PriorityID"] = new SelectList(_context.OptionTypes.Where(m => m.Type == "Priority"), "Id", "OptionName", eTasks.PriorityID);
             ViewData["ProjectID"] = new SelectList(_context.Projects, "Id", "ProjectName", eTasks.ProjectID);
             ViewData["RequestedBy"] = new SelectList(_context.Users, "Id", "FirstName", eTasks.RequestedBy);
-            ViewData["CreatedBy"] = new SelectList(_context.Users, "Id", "Id", eTasks.CreatedBy);
+            ViewData["CreatedBy"] = new SelectList(_context.Users, "Id", "Id", empTasks.CreatedBy);
             ViewData["Status"] = new SelectList(_context.OptionTypes.Where(m => m.Type == "Status"), "Id", "OptionName", eTasks.Status);
             return View(eTasks);
         }

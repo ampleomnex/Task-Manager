@@ -26,6 +26,9 @@ namespace TaskManager.Models
         [Display(Name = "Estimated Time")]
         public TimeSpan EstTime { get; set; }
 
+        [Display(Name = "Time Spent")]
+        public TimeSpan TimeSpent { get; set; }
+
         [Required(ErrorMessage = "Project Name is required.")]
         [Display(Name = "Project Name")]
         public virtual int ProjectID { get; set; }

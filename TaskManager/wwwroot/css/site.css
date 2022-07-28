@@ -41,7 +41,8 @@ body {
 }
 
 .lopbg {
-    background: #7d94cf;
+    background: rgb(34,193,195);
+    background: linear-gradient(0deg, rgba(34,193,195,1) 0%, rgba(125,148,207,1) 100%);
 }
 .se-pane {
     background: #fff;

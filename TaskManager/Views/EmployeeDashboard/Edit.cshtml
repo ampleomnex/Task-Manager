@@ -29,6 +29,11 @@
                 <span asp-validation-for="EstTime" class="text-danger"></span>
             </div>
             <div class="mb-3">
+                <label asp-for="TimeSpent" class="form-label"></label>
+                <input asp-for="TimeSpent" class="form-control" />
+                <span asp-validation-for="TimeSpent" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
                 <label asp-for="ProjectID" class="form-label"></label>
                 <select asp-for="ProjectID" class="form-control" asp-items="ViewBag.ProjectID"></select>
                 <span asp-validation-for="ProjectID" class="text-danger"></span>
@@ -70,7 +75,7 @@
             </div>
             <div class="mb-3">
                 <label asp-for="Comments" class="form-label"></label>
-                <input asp-for="Comments" class="form-control" />
+                <textarea asp-for="Comments" class="form-control"></textarea>
                 <span asp-validation-for="Comments" class="text-danger"></span>
             </div>
             <div class="mb-3">
