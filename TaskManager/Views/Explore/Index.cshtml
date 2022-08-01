@@ -122,7 +122,7 @@
                     @Html.DisplayFor(modelItem => item.BatchEndDate)
                 </span>
             </div>
-           <button type="button" class="button" onClick="goToCourse('@item.BatchCourseID','@ViewBag.userID');">GO TO COURSE</button>
+           <button type="button" class="button" onClick="goToCourse('@item.BatchCourseID','@ViewBag.userID','@ViewBag.liveLearnServer');">GO TO COURSE</button>
       </div>   
  }
   </div>
@@ -132,9 +132,9 @@
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 
          <script type="text/javascript">
-            function goToCourse(batchCourseID,userEmail) {
-              // window.location= "http://localhost:8080/evidya/ewqmslogin?userID=" +userEmail + "&batchCourseID=" + batchCourseID;
-               window.open("http://localhost:8080/evidya/ewqmslogin?userID=" +userEmail + "&batchCourseID=" + batchCourseID, '_blank').focus();
+            function goToCourse(batchCourseID,userEmail, server) {
+              // window.open("http://localhost:8080/evidya/ewqmslogin?userID=" +userEmail + "&batchCourseID=" + batchCourseID, '_blank').focus();
+               window.open(server + "ewqmslogin?userID=" +userEmail + "&batchCourseID=" + batchCourseID, '_blank').focus();
             }
 
          </script>

@@ -13,9 +13,11 @@ namespace TaskManager.Controllers
     public class ExploreController : Controller
     {
         private readonly UserManager<AppUser> _userManager;
-        public ExploreController(UserManager<AppUser> userManager)
+        private readonly IConfiguration _configuration;
+        public ExploreController(UserManager<AppUser> userManager, IConfiguration configuration)
         {
             _userManager = userManager;
+            _configuration = configuration;
         }
 
         /*public class ExploreCourseParams
@@ -30,9 +32,12 @@ namespace TaskManager.Controllers
         public async Task<IActionResult> IndexAsync()
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);
-            ViewBag.userID = user.UserName; 
+            ViewBag.userID = user.UserName;
+            var liveLearnServer = _configuration["LiveLearnServer"];
+            ViewBag.liveLearnServer = liveLearnServer;
 
-            var data= "numOfRecordsPerPage=100&pageNo=0&batchStatus=" + "40,10";
+
+            var data = "numOfRecordsPerPage=100&pageNo=0&batchStatus=" + "40,10";
 
             /*var exploreParams = new ExploreCourseParams
             {
@@ -45,8 +50,8 @@ namespace TaskManager.Controllers
             var exdata = new StringContent(data, Encoding.UTF8, "application/x-www-form-urlencoded");
 
             List<Courses> CoursesInfo = new List<Courses>();
-           
-            var url = "http://localhost:8080/evidya/explore";
+
+            var url = liveLearnServer +"explore"; //"http://localhost:8080/evidya/explore";
             using var client = new HttpClient();
 
             var response = await client.PostAsync(url, exdata);
