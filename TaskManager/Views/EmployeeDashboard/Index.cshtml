@@ -4,49 +4,52 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Dashboard</h1>
+<h3>My Tasks</h3>
 
 
-<table class="table table-bordered">
+<table class="table table-hover">
     <thead>
         <tr>
-            <th>
+            <th class="text-primary">
                 @Html.DisplayNameFor(model => model.TaskName)
             </th>
-            <th>
+            <th class="text-primary">
                 @Html.DisplayNameFor(model => model.OptionType)
             </th>
-            <th>
+            <th class="text-primary">
                 @Html.DisplayNameFor(model => model.EstTime)
             </th>
-            <th>
+            <th class="text-primary">
+                @Html.DisplayNameFor(model => model.TimeSpent)
+            </th>
+            <th class="text-primary">
                 @Html.DisplayNameFor(model => model.Projects)
             </th>
-            <th>
+            <th class="text-primary">
                 @Html.DisplayNameFor(model => model.Epics)
             </th>
-            <th>
+            <th class="text-primary">
                 @Html.DisplayNameFor(model => model.AssignedUser)
             </th>
-            <th>
+            <th class="text-primary">
                 @Html.DisplayNameFor(model => model.RequestedUser)
             </th>
-            <th>
+            <th class="text-primary">
                 @Html.DisplayNameFor(model => model.RequestDate)
             </th>
-            <th>
+            <th class="text-primary">
                 @Html.DisplayNameFor(model => model.PlannedStart)
             </th>
-            <th>
+            <th class="text-primary">
                 @Html.DisplayNameFor(model => model.DueDate)
             </th>
-            <th>
+            <th class="text-primary">
                 @Html.DisplayNameFor(model => model.Status)
             </th>
-            <th>
+            <th class="text-primary">
                 @Html.DisplayNameFor(model => model.Comments)
             </th>
-            <th></th>
+            <th class="text-primary"></th>
         </tr>
     </thead>
     <tbody>
@@ -60,6 +63,9 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.EstTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TimeSpent)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Projects.ProjectName)
