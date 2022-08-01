@@ -93,8 +93,8 @@
             <!-- 
             Bootstrap docs: https://getbootstrap.com/docs
             -->
-            
-      <div class="course-list">
+        
+       <div class="course-list">
             <div>
                 <img src="@Url.Content(item.CourseImageFullPath)"  id="courseimg" onerror="this.onerror=null; this.src='https://ample.omnex.com/resources/product/images/NewIcons/svg/course.svg'">
             </div>
@@ -122,62 +122,20 @@
                     @Html.DisplayFor(modelItem => item.BatchEndDate)
                 </span>
             </div>
-            <button type="button" class="button">GO TO COURSE</button>
-            
-      </div>
+           <button type="button" class="button" onClick="goToCourse('@item.BatchCourseID','@ViewBag.userID');">GO TO COURSE</button>
+      </div>   
  }
   </div>
 
 </div>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 
+         <script type="text/javascript">
+            function goToCourse(batchCourseID,userEmail) {
+              // window.location= "http://localhost:8080/evidya/ewqmslogin?userID=" +userEmail + "&batchCourseID=" + batchCourseID;
+               window.open("http://localhost:8080/evidya/ewqmslogin?userID=" +userEmail + "&batchCourseID=" + batchCourseID, '_blank').focus();
+            }
 
-
-
-<!--<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.CourseName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Amount)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.BatchName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.BatchStartDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CategoryName)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>-->
-   @* @foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.CourseName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Amount)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.BatchName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.BatchStartDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CategoryName)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Clid">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Clid">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Clid">Delete</a>
-            </td>
-        </tr>
+         </script>
 }
-    </tbody>
-</table>*@

@@ -1,50 +1,54 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using RestSharp;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Text;
+using TaskManager.Models;
 using TaskManager.Models.Response;
 
 namespace TaskManager.Controllers
 {
     public class ExploreController : Controller
     {
-        public ExploreController()
+        private readonly UserManager<AppUser> _userManager;
+        public ExploreController(UserManager<AppUser> userManager)
         {
-
+            _userManager = userManager;
         }
 
-        public class ExploreCourseParams
+        /*public class ExploreCourseParams
         {
             public int numOfRecordsPerPage { get; set; }
             public int pageNo { get; set; }
             public string? batchStatus { get; set; }
-        }
+        }*/
 
 
         // [HttpPost]
         public async Task<IActionResult> IndexAsync()
         {
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+            ViewBag.userID = user.UserName; 
+
             var data= "numOfRecordsPerPage=100&pageNo=0&batchStatus=" + "40,10";
 
-            var exploreParams = new ExploreCourseParams
+            /*var exploreParams = new ExploreCourseParams
             {
                 numOfRecordsPerPage = 100,
                 pageNo = 0,
                 batchStatus = "40,10"
             };
 
-            var json = JsonConvert.SerializeObject(exploreParams);
-            //var exdata = new StringContent(json, Encoding.UTF8, "application/json");
+            var json = JsonConvert.SerializeObject(exploreParams);*/
             var exdata = new StringContent(data, Encoding.UTF8, "application/x-www-form-urlencoded");
 
             List<Courses> CoursesInfo = new List<Courses>();
            
-            var url = "https://ample.omnex.com/explore";
+            var url = "http://localhost:8080/evidya/explore";
             using var client = new HttpClient();
 
-            //var response = await client.PostAsync(url, paramdata);
             var response = await client.PostAsync(url, exdata);
 
             //Storing the response details recieved from web api
