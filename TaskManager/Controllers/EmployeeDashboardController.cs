@@ -122,7 +122,9 @@ namespace TaskManager.Controllers
             ViewData["RequestedBy"] = new SelectList(_context.Users, "Id", "FirstName", eTasks.RequestedBy);
             ViewData["CreatedBy"] = new SelectList(_context.Users, "Id", "Id", eTasks.CreatedBy);
             ViewData["Status"] = new SelectList(_context.OptionTypes.Where(m => m.Type == "Status"), "Id", "OptionName", eTasks.Status);
-
+            ViewData["SpentTime"] = eTasks.TimeSpent;
+            ViewData["Taskname"] = eTasks.TaskName;
+            //ViewData["TimeTaken"] = null;
             return View(eTasks);
         }
 
@@ -131,10 +133,10 @@ namespace TaskManager.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, EmployeeTaskRequest eTasks)
+        public async Task<IActionResult> Edit(int id, EmployeeTaskRequest eTasks,TimeSpan timetaken)
         {
             var empTasks = await _context.EmpTasks.FindAsync(id);
-
+            var time = timetaken;
             if (id != empTasks.Id)
             {
                 return NotFound();
@@ -159,7 +161,7 @@ namespace TaskManager.Controllers
                         empTasks.Status = eTasks.Status;
                         empTasks.ModifiedDate = DateTime.UtcNow;
                         empTasks.Comments = eTasks.Comments;
-                        empTasks.TimeSpent = empTasks.TimeSpent + eTasks.TimeSpent;
+                        empTasks.TimeSpent = empTasks.TimeSpent + timetaken;
                     }
                     _context.Update(empTasks);
                     await _context.SaveChangesAsync();

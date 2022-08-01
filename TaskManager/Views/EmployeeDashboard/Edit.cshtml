@@ -2,13 +2,13 @@
 
 @{
     ViewData["Title"] = "Edit";
+    var totalTimeSpent = ViewData["SpentTime"];
+    var TaskName = ViewData["Taskname"];
 }
 
-<h1>Edit</h1>
-
-<h4>ETasks</h4>
+<h4 class="px-4"><a type="button" class="btn btn-outline-dark btn-sm" asp-action="Index">Back</a> Edit Task - @TaskName</h4>
 <hr />
-<div class="container">
+<div class="px-4">
     <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -29,8 +29,10 @@
                 <span asp-validation-for="EstTime" class="text-danger"></span>
             </div>
             <div class="mb-3">
+                
+                <label class="form-label">Total time spent: @totalTimeSpent</label><br/>
                 <label asp-for="TimeSpent" class="form-label"></label>
-                <input asp-for="TimeSpent" class="form-control" />
+                <input type="time" id ="timetaken" name="timetaken" class="form-control"/>
                 <span asp-validation-for="TimeSpent" class="text-danger"></span>
             </div>
             <div class="mb-3">
@@ -49,7 +51,7 @@
                 <span asp-validation-for="AssignedTo" class="text-danger"></span>
             </div>
             <div class="mb-3">
-                <label asp-for="RequestedBy" class="form-label"></label>
+                <label asp-for="RequestedBy" class="form-label">Requested By</label>
                 <select asp-for="RequestedBy" class="form-control" asp-items="ViewBag.RequestedBy"></select>
                 <span asp-validation-for="RequestedBy" class="text-danger"></span>
             </div>
@@ -85,9 +87,7 @@
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

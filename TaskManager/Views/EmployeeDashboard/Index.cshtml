@@ -4,52 +4,52 @@
     ViewData["Title"] = "Index";
 }
 
-<h3>My Tasks</h3>
 
 
-<table class="table table-hover">
-    <thead>
+<table class="table caption-top table-hover table-striped">
+    <caption><h3>My Tasks</h3></caption>
+    <thead class="table-light">
         <tr>
-            <th class="text-primary">
+            <th>
                 @Html.DisplayNameFor(model => model.TaskName)
             </th>
-            <th class="text-primary">
-                @Html.DisplayNameFor(model => model.OptionType)
+            <th>
+                Option Type
             </th>
-            <th class="text-primary">
+            <th>
                 @Html.DisplayNameFor(model => model.EstTime)
             </th>
-            <th class="text-primary">
+            <th>
                 @Html.DisplayNameFor(model => model.TimeSpent)
             </th>
-            <th class="text-primary">
+            <th>
                 @Html.DisplayNameFor(model => model.Projects)
             </th>
-            <th class="text-primary">
+            <th>
                 @Html.DisplayNameFor(model => model.Epics)
             </th>
-            <th class="text-primary">
-                @Html.DisplayNameFor(model => model.AssignedUser)
+            <th>
+                Assigned To
             </th>
-            <th class="text-primary">
-                @Html.DisplayNameFor(model => model.RequestedUser)
+            <th>
+                Requested By
             </th>
-            <th class="text-primary">
+            <th>
                 @Html.DisplayNameFor(model => model.RequestDate)
             </th>
-            <th class="text-primary">
+            @*<th class="text-primary">
                 @Html.DisplayNameFor(model => model.PlannedStart)
-            </th>
-            <th class="text-primary">
+            </th>*@
+            <th>
                 @Html.DisplayNameFor(model => model.DueDate)
             </th>
-            <th class="text-primary">
+            <th>
                 @Html.DisplayNameFor(model => model.Status)
             </th>
-            <th class="text-primary">
+            @*<th class="text-primary">
                 @Html.DisplayNameFor(model => model.Comments)
-            </th>
-            <th class="text-primary"></th>
+            </th>*@
+            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -82,22 +82,22 @@
             <td>
                 @Html.DisplayFor(modelItem => item.RequestDate)
             </td>
-            <td>
+            @*<td>
                 @Html.DisplayFor(modelItem => item.PlannedStart)
-            </td>
+            </td>*@
             <td>
                 @Html.DisplayFor(modelItem => item.DueDate)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.StatusType.OptionName)
             </td>
-            <td>
+            @*<td>
                 @Html.DisplayFor(modelItem => item.Comments)
-            </td>
+            </td>*@
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning btn-sm">Edit</a>
+                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info btn-sm">Details</a>
+                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger btn-sm">Delete</a>
             </td>
         </tr>
 }
