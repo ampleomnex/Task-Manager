@@ -125,6 +125,10 @@ namespace TaskManager.Controllers
             ViewData["SpentTime"] = eTasks.TimeSpent;
             ViewData["Taskname"] = eTasks.TaskName;
             //ViewData["TimeTaken"] = null;
+            var e = eTasks.EstTime.ToString();
+            var time = e.Split(":");
+            ViewData["ehours"] = time[0];
+            ViewData["emin"] = time[1];
             return View(eTasks);
         }
 
@@ -133,10 +137,13 @@ namespace TaskManager.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, EmployeeTaskRequest eTasks,TimeSpan timetaken)
+        public async Task<IActionResult> Edit(int id, EmployeeTaskRequest eTasks, String hours, String min, String ehours, String emin)
         {
             var empTasks = await _context.EmpTasks.FindAsync(id);
-            var time = timetaken;
+            var t = hours+':'+min;
+            TimeSpan time = TimeSpan.Parse(t);
+            var et = ehours + ':' + emin;
+            TimeSpan etime = TimeSpan.Parse(et);
             if (id != empTasks.Id)
             {
                 return NotFound();
@@ -153,7 +160,7 @@ namespace TaskManager.Controllers
                         empTasks.ProjectID = eTasks.ProjectID;
                         empTasks.EpicsID = eTasks.EpicsID;
                         empTasks.DueDate = eTasks.DueDate;
-                        empTasks.EstTime = eTasks.EstTime;
+                        empTasks.EstTime = etime;
                         empTasks.AssignedTo = eTasks.AssignedTo;
                         empTasks.RequestedBy = eTasks.RequestedBy;
                         empTasks.RequestDate = eTasks.RequestDate;
@@ -161,7 +168,7 @@ namespace TaskManager.Controllers
                         empTasks.Status = eTasks.Status;
                         empTasks.ModifiedDate = DateTime.UtcNow;
                         empTasks.Comments = eTasks.Comments;
-                        empTasks.TimeSpent = empTasks.TimeSpent + timetaken;
+                        empTasks.TimeSpent = empTasks.TimeSpent + time;
                     }
                     _context.Update(empTasks);
                     await _context.SaveChangesAsync();

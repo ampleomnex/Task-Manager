@@ -4,9 +4,11 @@
     ViewData["Title"] = "Edit";
     var totalTimeSpent = ViewData["SpentTime"];
     var TaskName = ViewData["Taskname"];
+    var eh = ViewData["ehours"];
+    var em = ViewData["emin"];
 }
 
-<h4 class="px-4"><a type="button" class="btn btn-outline-dark btn-sm" asp-action="Index">Back</a> Edit Task - @TaskName</h4>
+<h4 class="px-4">Edit Task - @TaskName</h4>
 <hr />
 <div class="px-4">
     <div class="col-md-4">
@@ -25,14 +27,24 @@
             </div>
             <div class="mb-3">
                 <label asp-for="EstTime" class="form-label"></label>
-                <input asp-for="EstTime" class="form-control" />
+                <div class="row m-0">
+                    <div class="col-md-5 ps-0"><input type="number" min="00" max="23" placeholder="hh" value="@eh" id ="ehours" class="form-control" name="ehours"></div>
+                    <label class="col-md-1 px-0 mt-1">HH :</label>
+                    <div class="col-md-5 ps-0"><input type="number" min="00" max="59" placeholder="mm" value="@em" id ="emin" class="form-control" name="emin"></div>
+                    <label class="col-md-1 px-0 mt-1">MM</label>
+                </div>
                 <span asp-validation-for="EstTime" class="text-danger"></span>
             </div>
             <div class="mb-3">
                 
                 <label class="form-label">Total time spent: @totalTimeSpent</label><br/>
                 <label asp-for="TimeSpent" class="form-label"></label>
-                <input type="time" id ="timetaken" name="timetaken" min="00:00" max="23:59" class="form-control"/>
+                <div class="row m-0">
+                    <div class="col-md-5 ps-0"><input type="number" min="00" max="23" placeholder="hh" value="00" id ="hours" class="form-control" name="hours"></div>
+                    <label class="col-md-1 px-0 mt-1">HH :</label>
+                    <div class="col-md-5 ps-0"><input type="number" min="00" max="59" placeholder="mm" value="00" id ="min" class="form-control" name="min"></div>
+                    <label class="col-md-1 px-0 mt-1">MM</label>
+                </div>
                 <span asp-validation-for="TimeSpent" class="text-danger"></span>
             </div>
             <div class="mb-3">
@@ -82,6 +94,7 @@
             </div>
             <div class="mb-3">
                 <input type="submit" value="Save" class="btn btn-primary" />
+                <a type="button" class="btn btn-secondary" asp-action="Index">Cancel</a>
             </div>
         </form>
     </div>

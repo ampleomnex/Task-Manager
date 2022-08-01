@@ -84,10 +84,12 @@ namespace TaskManager.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(TasksRequest taskrequest)
+        public async Task<IActionResult> Create(TasksRequest taskrequest,String hours, String min)
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);
             ETasks tasks = new ETasks();
+            var t = hours + ':' + min;
+            TimeSpan etime = TimeSpan.Parse(t);
             if (ModelState.IsValid)
             {
                 tasks.TaskName = taskrequest.TaskName;
@@ -95,7 +97,7 @@ namespace TaskManager.Controllers
                 tasks.ProjectID = taskrequest.ProjectID;
                 tasks.DueDate = taskrequest.DueDate;
                 tasks.EpicsID = taskrequest.EpicsID;
-                tasks.EstTime = taskrequest.EstTime;
+                tasks.EstTime = etime;
                 tasks.AssignedTo = taskrequest.AssignedTo;
                 tasks.RequestedBy = taskrequest.RequestedBy;
                 tasks.RequestDate = taskrequest.RequestDate;
@@ -137,6 +139,11 @@ namespace TaskManager.Controllers
             ViewData["ProjectID"] = new SelectList(_context.Projects, "Id", "ProjectName", tasks.ProjectID);
             ViewData["RequestedBy"] = new SelectList(managerList, "Id", "FirstName", tasks.RequestedBy);
             ViewData["CreatedBy"] = new SelectList(_context.Users, "Id", "FirstName", tasks.CreatedBy);
+            ViewData["Taskname"] = tasks.TaskName;
+            var e = tasks.EstTime.ToString();
+            var time = e.Split(":");
+            ViewData["hours"] = time[0];
+            ViewData["min"] = time[1];
             return View(tasks);
         }
 
@@ -145,10 +152,11 @@ namespace TaskManager.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, TasksRequest taskrequest)
+        public async Task<IActionResult> Edit(int id, TasksRequest taskrequest, String hours, String min)
         {
             var tasks = await _context.EmpTasks.FindAsync(id);
-
+            var t = hours + ':' + min;
+            TimeSpan etime = TimeSpan.Parse(t);
             if (ModelState.IsValid)
             {
                 try
@@ -160,7 +168,7 @@ namespace TaskManager.Controllers
                         tasks.ProjectID = taskrequest.ProjectID;
                         tasks.EpicsID = taskrequest.EpicsID;
                         tasks.DueDate = taskrequest.DueDate;
-                        tasks.EstTime = taskrequest.EstTime;
+                        tasks.EstTime = etime;
                         tasks.AssignedTo = taskrequest.AssignedTo;
                         tasks.RequestedBy = taskrequest.RequestedBy;
                         tasks.RequestDate = taskrequest.RequestDate;

@@ -2,77 +2,82 @@
 
 @{
     ViewData["Title"] = "Edit";
+    var h = ViewData["hours"];
+    var m = ViewData["min"];
+    var TaskName = ViewData["Taskname"];
 }
 
-<h1>Edit</h1>
-
-<h4>Tasks</h4>
+<h4 class="px-4">Edit Task - @TaskName</h4>
 <hr />
-<div class="container">
+<div class="px-4">
     <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
-            <div class="form-group">
-                <label asp-for="TaskName" class="control-label"></label>
+            <div class="mb-3">
+                <label asp-for="TaskName" class="form-label"></label>
                 <input asp-for="TaskName" class="form-control" />
                 <span asp-validation-for="TaskName" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="PriorityID" class="control-label"></label>
+            <div class="mb-3">
+                <label asp-for="PriorityID" class="form-label"></label>
                 <select asp-for="PriorityID" class="form-control" asp-items="ViewBag.PriorityID"></select>
                 <span asp-validation-for="PriorityID" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="EstTime" class="control-label"></label>
-                <input type="time" asp-for="EstTime" class="form-control" />
+            <div class="mb-3">
+                <label asp-for="EstTime" class="form-label"></label>
+                <div class="row m-0">
+                    <div class="col-md-5 ps-0"><input type="number" min="0" max="23" placeholder="hh" value="@h" id ="hours" class="form-control" name="hours"></div>
+                    <label class="col-md-1 px-0 mt-1">HH :</label>
+                    <div class="col-md-5 ps-0"><input type="number" min="0" max="59" placeholder="mm" value="@m" id ="min" class="form-control" name="min"></div>
+                    <label class="col-md-1 px-0 mt-1">MM</label>
+                </div>
                 <span asp-validation-for="EstTime" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="ProjectID" class="control-label"></label>
+            <div class="mb-3">
+                <label asp-for="ProjectID" class="form-label"></label>
                 <select asp-for="ProjectID" class="form-control" asp-items="ViewBag.ProjectID"></select>
                 <span asp-validation-for="ProjectID" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="EpicsID" class="control-label"></label>
+            <div class="mb-3">
+                <label asp-for="EpicsID" class="form-label"></label>
                 <select asp-for="EpicsID" class="form-control" asp-items="ViewBag.EpicsID"></select>
                 <span asp-validation-for="EpicsID" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="AssignedTo" class="control-label"></label>
+            <div class="mb-3">
+                <label asp-for="AssignedTo" class="form-label"></label>
                 <select asp-for="AssignedTo" class="form-control" asp-items="ViewBag.AssignedTo"></select>
                 <span asp-validation-for="AssignedTo" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="RequestedBy" class="control-label"></label>
+            <div class="mb-3">
+                <label asp-for="RequestedBy" class="form-label"></label>
                 <select asp-for="RequestedBy" class="form-control" asp-items="ViewBag.RequestedBy"></select>
                 <span asp-validation-for="RequestedBy" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="RequestDate" class="control-label"></label>
+            <div class="mb-3">
+                <label asp-for="RequestDate" class="form-label"></label>
                 <input asp-for="RequestDate" class="form-control" />
                 <span asp-validation-for="RequestDate" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="PlannedStart" class="control-label"></label>
+            <div class="mb-3">
+                <label asp-for="PlannedStart" class="form-label"></label>
                 <input asp-for="PlannedStart" class="form-control" />
                 <span asp-validation-for="PlannedStart" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="DueDate" class="control-label"></label>
+            <div class="mb-3">
+                <label asp-for="DueDate" class="form-label"></label>
                 <input asp-for="DueDate" class="form-control" />
                 <span asp-validation-for="DueDate" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="mb-3">
                 <input type="submit" value="Save" class="btn btn-primary" />
+                 <a type="button" class="btn btn-secondary" asp-action="Index">Cancel</a>
             </div>
         </form>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

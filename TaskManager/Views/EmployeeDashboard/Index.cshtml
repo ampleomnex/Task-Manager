@@ -7,14 +7,14 @@
 
 
 <table class="table caption-top table-hover table-striped">
-    <caption><h3>My Tasks</h3></caption>
+    <caption class="pt-0"><h3 class="my-0">My Tasks</h3></caption>
     <thead class="table-light">
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.TaskName)
             </th>
             <th>
-                Option Type
+                Type
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.EstTime)
@@ -34,9 +34,9 @@
             <th>
                 Requested By
             </th>
-            <th>
+            @*<th>
                 @Html.DisplayNameFor(model => model.RequestDate)
-            </th>
+            </th>*@
             @*<th class="text-primary">
                 @Html.DisplayNameFor(model => model.PlannedStart)
             </th>*@
@@ -79,9 +79,9 @@
             <td>
                 @Html.DisplayFor(modelItem => item.RequestedUser.FirstName)
             </td>
-            <td>
+           @* <td>
                 @Html.DisplayFor(modelItem => item.RequestDate)
-            </td>
+            </td>*@
             @*<td>
                 @Html.DisplayFor(modelItem => item.PlannedStart)
             </td>*@
@@ -95,7 +95,7 @@
                 @Html.DisplayFor(modelItem => item.Comments)
             </td>*@
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning btn-sm">Edit</a>
+                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary btn-sm">Edit</a>
                 <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info btn-sm">Details</a>
                 <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger btn-sm">Delete</a>
             </td>
