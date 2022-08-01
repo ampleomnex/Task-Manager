@@ -32,7 +32,7 @@
                 
                 <label class="form-label">Total time spent: @totalTimeSpent</label><br/>
                 <label asp-for="TimeSpent" class="form-label"></label>
-                <input type="time" id ="timetaken" name="timetaken" class="form-control"/>
+                <input type="time" id ="timetaken" name="timetaken" min="00:00" max="23:59" class="form-control"/>
                 <span asp-validation-for="TimeSpent" class="text-danger"></span>
             </div>
             <div class="mb-3">
