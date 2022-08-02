@@ -78,7 +78,7 @@ namespace TaskManager.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["CustomerID"] = new SelectList(_context.Customers, "Id", "CustomerName", project.CustomerID);
-            ViewData["spoc"] = new SelectList(_context.Users, "Id", "UserName", project.spoc);
+            ViewData["spoc"] = new SelectList(_context.Users, "Id", "FirstName", project.spoc);
             
             return View(project);
         }
@@ -97,7 +97,7 @@ namespace TaskManager.Controllers
                 return NotFound();
             }
             ViewData["CustomerID"] = new SelectList(_context.Customers, "Id", "CustomerName", project.CustomerID);
-            ViewData["spoc"] = new SelectList(_context.Users, "Id", "UserName", project.spoc);
+            ViewData["spoc"] = new SelectList(_context.Users, "Id", "FirstName", project.spoc);
             return View(project);
         }
 

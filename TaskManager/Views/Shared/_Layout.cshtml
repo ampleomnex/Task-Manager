@@ -29,7 +29,7 @@
                         <ul class="navbar-nav flex-grow-1">
                             @if (SignInManager.IsSignedIn(User))
                             {
-                                if (User.IsInRole("admin")) //Admin user
+                                if (User.IsInRole("admin") || User.IsInRole("manager") ) //Admin user
                                 {
                                     <li class="nav-item">
                                         <a class="nav-link" asp-area="" asp-controller="Tasks" asp-action="Index">Task</a>
