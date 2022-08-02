@@ -71,6 +71,8 @@
     </thead>
     <tbody>
 @foreach (var item in Model) {
+        var requestDate= item.RequestDate.ToShortDateString();
+        var dueDate = item.DueDate.ToShortDateString();
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.ProjectName)
@@ -97,13 +99,13 @@
                 @*@Html.DisplayFor(modelItem => item.PlannedStart)*@
             </td>-->
             <td>
-                @Html.DisplayFor(modelItem => item.RequestDate)
+                @Html.DisplayFor(modelItem => requestDate)
             </td>
             <!--<td>
                @* @Html.DisplayFor(modelItem => item.ModifiedDate)*@
             </td> -->           
             <td>
-                @Html.DisplayFor(modelItem => item.DueDate)
+                @Html.DisplayFor(modelItem => dueDate)
             </td>
         </tr>
 }

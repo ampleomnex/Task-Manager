@@ -46,7 +46,9 @@
     </thead>
     <tbody>
 @foreach (var item in Model) {
-        <tr>
+            var requestDate= item.RequestDate.ToShortDateString();
+            var dueDate = item.DueDate.ToShortDateString();
+            <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.TaskName)
             </td>
@@ -72,10 +74,10 @@
                 @Html.DisplayFor(modelItem => item.StatusType.OptionName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.RequestDate)
+                @Html.DisplayFor(modelItem => requestDate)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.DueDate)
+                @Html.DisplayFor(modelItem => dueDate)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary btn-sm">Edit</a>

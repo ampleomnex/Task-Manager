@@ -15,6 +15,8 @@
 
         public string Status { get; set; }
 
+        public TimeSpan TimeSpent { get; set; }
+
         public DateTime PlannedStart { get; set; }
 
         public DateTime RequestDate { get; set; }
