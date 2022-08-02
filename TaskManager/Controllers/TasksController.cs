@@ -35,7 +35,8 @@ namespace TaskManager.Controllers
                 .Include(t => t.Projects)
                 .Include(t => t.RequestedUser)
                 .Include(t => t.User)
-                .Include(t => t.OptionType);
+                .Include(t => t.OptionType)
+                .Include(e => e.StatusType);
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -54,6 +55,7 @@ namespace TaskManager.Controllers
                 .Include(t => t.RequestedUser)
                 .Include(t => t.User)
                 .Include(t => t.OptionType)
+                .Include(e => e.StatusType)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (tasks == null)
             {
@@ -76,6 +78,7 @@ namespace TaskManager.Controllers
             ViewData["ProjectID"] = new SelectList(_context.Projects, "Id", "ProjectName");
             ViewData["RequestedBy"] = new SelectList(managerList, "Id", "FirstName");
             ViewData["CreatedBy"] = new SelectList(_context.Users, "Id", "FirstName");
+            ViewData["Status"] = new SelectList(_context.OptionTypes.Where(m => m.Type == "Status"), "Id", "OptionName");
             return View();
         }
 
@@ -102,7 +105,7 @@ namespace TaskManager.Controllers
                 tasks.RequestedBy = taskrequest.RequestedBy;
                 tasks.RequestDate = taskrequest.RequestDate;
                 tasks.PlannedStart = taskrequest.PlannedStart;
-                tasks.Status = 10;
+                tasks.Status = taskrequest.Status;
                 tasks.User = user;
                 _context.Add(tasks);
                 await _context.SaveChangesAsync();
@@ -140,6 +143,8 @@ namespace TaskManager.Controllers
             ViewData["RequestedBy"] = new SelectList(managerList, "Id", "FirstName", tasks.RequestedBy);
             ViewData["CreatedBy"] = new SelectList(_context.Users, "Id", "FirstName", tasks.CreatedBy);
             ViewData["Taskname"] = tasks.TaskName;
+            ViewData["Status"] = new SelectList(_context.OptionTypes.Where(m => m.Type == "Status"), "Id", "OptionName", tasks.Status);
+
             var e = tasks.EstTime.ToString();
             var time = e.Split(":");
             ViewData["hours"] = time[0];
@@ -173,7 +178,7 @@ namespace TaskManager.Controllers
                         tasks.RequestedBy = taskrequest.RequestedBy;
                         tasks.RequestDate = taskrequest.RequestDate;
                         tasks.PlannedStart = taskrequest.PlannedStart;
-                        tasks.Status = 10;
+                        tasks.Status = taskrequest.Status;
                         tasks.ModifiedDate = DateTime.UtcNow;
                     }
                     _context.Update(tasks);
@@ -215,6 +220,7 @@ namespace TaskManager.Controllers
                 .Include(t => t.RequestedUser)
                 .Include(t => t.User)
                 .Include(t => t.OptionType)
+                .Include(e => e.StatusType)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (tasks == null)
             {

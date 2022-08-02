@@ -29,7 +29,7 @@ namespace TaskManager.Models.Request
 
         public DateTime DueDate { get; set; }
 
-        //public string Status { get; set; }
+        public int Status { get; set; }
         //public string Comments { get; set; }
     }
 }

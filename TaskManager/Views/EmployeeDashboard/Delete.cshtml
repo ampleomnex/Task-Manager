@@ -21,7 +21,7 @@
             @Html.DisplayNameFor(model => model.OptionType)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.OptionType.Id)
+            @Html.DisplayFor(model => model.OptionType.OptionName)
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.EstTime)
@@ -39,19 +39,19 @@
             @Html.DisplayNameFor(model => model.Epics)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Epics.Id)
+            @Html.DisplayFor(model => model.Epics.EpicsName)
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.AssignedUser)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.AssignedUser.Id)
+            @Html.DisplayFor(model => model.AssignedUser.FirstName)
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.RequestedUser)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.RequestedUser.Id)
+            @Html.DisplayFor(model => model.RequestedUser.FirstName)
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.RequestDate)
@@ -75,7 +75,7 @@
             @Html.DisplayNameFor(model => model.Status)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Status)
+            @Html.DisplayFor(model => model.StatusType.OptionName)
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Comments)
